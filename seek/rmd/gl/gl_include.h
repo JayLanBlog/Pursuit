@@ -1,0 +1,10 @@
+#pragma once
+#include "gl_core.h"
+#include "gl_buffer.h"
+#include "gl_program.h"
+#include "gl_texture.h"
+#include "gl_vertex.h"
+#include "gl_uniform.h"
+#include "gl_pipline.h"
+#include "gl_view.h"
+#include "gl_default.h"

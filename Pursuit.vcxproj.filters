@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pursuit_engine.cpp" />
+    <ClCompile Include="external\glad\glad.c">
+      <Filter>include\gald</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui.cpp">
+      <Filter>include\ingui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_demo.cpp">
+      <Filter>include\ingui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_draw.cpp">
+      <Filter>include\ingui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_tables.cpp">
+      <Filter>include\ingui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui\imgui_widgets.cpp">
+      <Filter>include\ingui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\hdrloader.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="external\stb_image.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\ui\imgui_impl_sdl3.cpp">
+      <Filter>seek\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\ui\gl\imgui_impl_opengl3.cpp">
+      <Filter>seek\ui\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\ui\vk\imgui_impl_vulkan.cpp">
+      <Filter>seek\ui\vk</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\device\pursuit_gl.cpp">
+      <Filter>seek\device</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\menu\console.cpp">
+      <Filter>seek\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="tool\helper\imgui_help.cpp">
+      <Filter>tool\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="tool\helper\mh.cpp">
+      <Filter>tool\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="tool\helper\string_h.cpp">
+      <Filter>tool\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="tool\helper\time_h.cpp">
+      <Filter>tool\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\menu\control_panel.cpp">
+      <Filter>seek\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_primitive.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_texture.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="system\file\sys_file.cpp">
+      <Filter>system\file</Filter>
+    </ClCompile>
+    <ClCompile Include="system\file\imge.cpp">
+      <Filter>system\file</Filter>
+    </ClCompile>
+    <ClCompile Include="tool\helper\mem_help.cpp">
+      <Filter>tool\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="system\logger\logger.cpp">
+      <Filter>system\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="system\logger\type_def.cpp">
+      <Filter>system\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\section\enum\material_em.cpp">
+      <Filter>seek\section\enum</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_buffer.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_program.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_uniform.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_default.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_global.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\view\3D\loader\loader_md.cpp">
+      <Filter>seek\view\3d\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="tool\math\pr_math.cpp">
+      <Filter>tool\math</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_vertex.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="system\file\sys_text.cpp">
+      <Filter>system\file</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\view\3D\model\modelv.cpp">
+      <Filter>seek\view\3d\model</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_core.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_batch.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\ui\seek_gl.cpp">
+      <Filter>seek\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_view.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\rmd\gl\gl_pipline.cpp">
+      <Filter>seek\rmd\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\platform\wcore_sdl.cpp">
+      <Filter>seek\core\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\core.cpp">
+      <Filter>seek\core</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\pass\draw_pass.cpp">
+      <Filter>seek\core\pass</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\gui\draw_ui.cpp">
+      <Filter>seek\core\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\pcamera.cpp">
+      <Filter>seek\core</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\text\draw_text.cpp">
+      <Filter>seek\core\text</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{1f6fda09-8f38-4450-95dd-ebe350da83ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\gald">
+      <UniqueIdentifier>{8f501e0a-9068-455d-9eb5-8d1394fafc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ingui">
+      <UniqueIdentifier>{912fead7-7666-4fc4-afda-3b27cf28f0be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\qoi">
+      <UniqueIdentifier>{de03ccf0-fb4c-4470-985b-b9ffbbc6181d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek">
+      <UniqueIdentifier>{4422791c-bc31-4e52-8f68-fd87155b29dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{a5fa0715-2a17-487e-95bc-888dd117b90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tool">
+      <UniqueIdentifier>{d7883952-af49-4b5c-aaf4-c6fb36a257bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tool\helper">
+      <UniqueIdentifier>{79d6406b-c27d-4779-9ab3-39f02b80a70c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tool\math">
+      <UniqueIdentifier>{32f4f52e-b0d8-41e9-a4c4-51048ef79e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tool\container">
+      <UniqueIdentifier>{d575f27d-9cf2-47f6-9368-ba18c4e98f22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\config">
+      <UniqueIdentifier>{42047a02-38bb-46db-9c30-87a07c341caa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\file">
+      <UniqueIdentifier>{0aebf172-e69d-4950-a186-3535f3e24b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system\logger">
+      <UniqueIdentifier>{2a244326-f1f8-4fc1-9e3d-42abbb4ce4aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\ui">
+      <UniqueIdentifier>{50e37487-faa5-4906-a767-4390d8826836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\device">
+      <UniqueIdentifier>{4bae022c-8958-4a0f-bb6e-cca06be68ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\section">
+      <UniqueIdentifier>{61592317-73eb-4690-84e6-4036f78b4099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\run">
+      <UniqueIdentifier>{25bd4eeb-82bd-45fb-b618-740fcbf07a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\ui\gl">
+      <UniqueIdentifier>{b70f3428-1638-4f44-a33f-ff2a737469a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\ui\vk">
+      <UniqueIdentifier>{7740fc69-4d38-4a1d-891b-cd539521d02f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\style">
+      <UniqueIdentifier>{8e634192-b504-406f-baa0-4bdd728c512d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\style\font">
+      <UniqueIdentifier>{53d718ac-4145-4bd1-8ab2-113efa77383b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\rmd">
+      <UniqueIdentifier>{400df9d0-a594-4dce-aa35-441bd2e0f531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\rmd\gl">
+      <UniqueIdentifier>{7ade08b3-ac55-4bf9-b49d-b7d80179994c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\rmd\vk">
+      <UniqueIdentifier>{8b3f3faa-b077-4bba-afb0-55d1bbbe15f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\section\graph">
+      <UniqueIdentifier>{01dacadc-08d3-4000-8125-e6256fb3db2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\section\cgstruct">
+      <UniqueIdentifier>{9bb713a0-71c8-465d-a956-4a48d5f7fa3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\section\enum">
+      <UniqueIdentifier>{02d35de5-eefc-4058-9067-9cfe886a670c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable">
+      <UniqueIdentifier>{2b7217b5-9867-4aa5-8105-7236a3d42a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\render">
+      <UniqueIdentifier>{6da7c59d-9f6a-4f39-ba5a-bfb9a166489d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\benchmark">
+      <UniqueIdentifier>{72735951-4b70-43a4-abb2-7a136b099ea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\core">
+      <UniqueIdentifier>{69600d96-01a0-4354-bbf4-8401f3be1b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\view">
+      <UniqueIdentifier>{0e7a1a08-4197-47ba-94e3-b032f35bb435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\view\3d">
+      <UniqueIdentifier>{24b2102b-5875-43c4-9f21-b84a4d1292cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\view\3d\loader">
+      <UniqueIdentifier>{87a5385c-5477-479b-8879-10aada40a32b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\view\2d">
+      <UniqueIdentifier>{34176335-3fb1-49ca-ad58-3e13d2e41a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\view\3d\model">
+      <UniqueIdentifier>{db005cc4-c4b6-49a5-91db-8062f74777e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\core\platform">
+      <UniqueIdentifier>{2257297b-f4fc-41cc-9f2f-641365b56b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\core\gui">
+      <UniqueIdentifier>{0cdbaf5f-cc40-4410-9799-a9903d7851ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\menu">
+      <UniqueIdentifier>{ca5416c4-8b16-49bc-acde-a6e8996f1d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\core\pass">
+      <UniqueIdentifier>{b5cda9f5-e4c5-4672-ab8a-efc02abc4a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\core\platform\event">
+      <UniqueIdentifier>{ab232851-7106-4d62-be40-e0801a901366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\core\text">
+      <UniqueIdentifier>{a33e3fea-d6c5-48d3-a95c-397ea511e300}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external\glad\glad.h">
+      <Filter>include\gald</Filter>
+    </ClInclude>
+    <ClInclude Include="external\imgui\imconfig.h">
+      <Filter>include\ingui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\imgui\imgui.h">
+      <Filter>include\ingui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\imgui\imgui_internal.h">
+      <Filter>include\ingui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\imgui\imstb_rectpack.h">
+      <Filter>include\ingui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\imgui\imstb_textedit.h">
+      <Filter>include\ingui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\imgui\imstb_truetype.h">
+      <Filter>include\ingui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\qoi\qoa.h">
+      <Filter>include\qoi</Filter>
+    </ClInclude>
+    <ClInclude Include="external\qoi\qoi.h">
+      <Filter>include\qoi</Filter>
+    </ClInclude>
+    <ClInclude Include="external\hdrloader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="external\stb_image.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\run\pursuit_app.h">
+      <Filter>seek\run</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\device\pursuit_device.h">
+      <Filter>seek\device</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\ui\imgui_impl_sdl3.h">
+      <Filter>seek\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\ui\gl\imgui_impl_opengl3.h">
+      <Filter>seek\ui\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\ui\gl\imgui_impl_opengl3_loader.h">
+      <Filter>seek\ui\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\ui\vk\imgui_impl_vulkan.h">
+      <Filter>seek\ui\vk</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\ui\seek_ui.h">
+      <Filter>seek\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\ui\seek_gl.h">
+      <Filter>seek\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\style\font\fonts.h">
+      <Filter>seek\style\font</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\device\pursuit_gl.h">
+      <Filter>seek\device</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\menu\console.h">
+      <Filter>seek\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\singletonh.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\imgui_help.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\mh.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\obf.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\string_h.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\time_h.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\menu\control_panel.h">
+      <Filter>seek\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\menu\entry_view.h">
+      <Filter>seek\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\menu\entry_manager.h">
+      <Filter>seek\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="system\config\platform_def.h">
+      <Filter>system\config</Filter>
+    </ClInclude>
+    <ClInclude Include="system\logger\type_def.h">
+      <Filter>system\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="system\logger\logger.h">
+      <Filter>system\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\martrix\cg_def.h">
+      <Filter>seek\section\cgstruct</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\graph\material_def.h">
+      <Filter>seek\section\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\graph\model_def.h">
+      <Filter>seek\section\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\key_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\material_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_primitive.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_buffer.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_define.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_program.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_texture.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\helper\mem_help.h">
+      <Filter>tool\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="system\file\sys_file.h">
+      <Filter>system\file</Filter>
+    </ClInclude>
+    <ClInclude Include="system\file\image.h">
+      <Filter>system\file</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\attachment_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\graph\shader_def.h">
+      <Filter>seek\section\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_uniform.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\graph\uniform_def.h">
+      <Filter>seek\section\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\uniform_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_global.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_default.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\render\base_render.h">
+      <Filter>seek\drawable\render</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\camera_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\view\3D\loader\loader_md.h">
+      <Filter>seek\view\3d\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="tool\math\pr_math.h">
+      <Filter>tool\math</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_vertex.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\gltype_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\graph\gl_def.h">
+      <Filter>seek\section\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\martrix\sys_def.h">
+      <Filter>seek\section\cgstruct</Filter>
+    </ClInclude>
+    <ClInclude Include="system\file\sys_text.h">
+      <Filter>system\file</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\view\3D\model\modelv.h">
+      <Filter>seek\view\3d\model</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_include.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_core.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_batch.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_view.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\rmd\gl\gl_pipline.h">
+      <Filter>seek\rmd\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\core.h">
+      <Filter>seek\core</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\pass\draw_pass.h">
+      <Filter>seek\core\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\gui\draw_ui.h">
+      <Filter>seek\core\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\config_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\platform\wcore_sdl.h">
+      <Filter>seek\core\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\core_global.h">
+      <Filter>seek\core</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\enum\winplat_em.h">
+      <Filter>seek\section\enum</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\run\seek_runner.h">
+      <Filter>seek\run</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\pcarmera.h">
+      <Filter>seek\core</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\model_viewer.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\section\graph\font_def.h">
+      <Filter>seek\section\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\text\draw_text.h">
+      <Filter>seek\core\text</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\gltf_view.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="external\svpng.inc">
+      <Filter>include</Filter>
+    </None>
+  </ItemGroup>
+</Project>

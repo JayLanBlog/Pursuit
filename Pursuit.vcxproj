@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{e349fe39-1d73-4e7b-90bf-b13a95065b74}</ProjectGuid>
+    <RootNamespace>Pursuit</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;win32_directx9.lib;SDL3.lib;opengl32.lib;vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;win32_directx9.lib;SDL3.lib;opengl32.lib;vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;win32_directx9.lib;SDL3.lib;opengl32.lib;vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;win32_directx9.lib;SDL3.lib;opengl32.lib;vulkan-1.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="external\glad\glad.c" />
+    <ClCompile Include="external\hdrloader.cpp" />
+    <ClCompile Include="external\imgui\imgui.cpp" />
+    <ClCompile Include="external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="external\stb_image.cpp" />
+    <ClCompile Include="pursuit_engine.cpp" />
+    <ClCompile Include="seek\core\core.cpp" />
+    <ClCompile Include="seek\core\gui\draw_ui.cpp" />
+    <ClCompile Include="seek\core\pass\draw_pass.cpp" />
+    <ClCompile Include="seek\core\pcamera.cpp" />
+    <ClCompile Include="seek\core\platform\wcore_sdl.cpp" />
+    <ClCompile Include="seek\core\text\draw_text.cpp" />
+    <ClCompile Include="seek\device\pursuit_gl.cpp" />
+    <ClCompile Include="seek\menu\console.cpp" />
+    <ClCompile Include="seek\menu\control_panel.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_batch.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_core.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_default.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_global.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_pipline.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_uniform.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_buffer.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_primitive.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_program.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_texture.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_vertex.cpp" />
+    <ClCompile Include="seek\rmd\gl\gl_view.cpp" />
+    <ClCompile Include="seek\section\enum\material_em.cpp" />
+    <ClCompile Include="seek\ui\gl\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="seek\ui\imgui_impl_sdl3.cpp" />
+    <ClCompile Include="seek\ui\seek_gl.cpp" />
+    <ClCompile Include="seek\ui\vk\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="seek\view\3D\loader\loader_md.cpp" />
+    <ClCompile Include="seek\view\3D\model\modelv.cpp" />
+    <ClCompile Include="system\file\imge.cpp" />
+    <ClCompile Include="system\file\sys_file.cpp" />
+    <ClCompile Include="system\file\sys_text.cpp" />
+    <ClCompile Include="system\logger\logger.cpp" />
+    <ClCompile Include="system\logger\type_def.cpp" />
+    <ClCompile Include="tool\helper\imgui_help.cpp" />
+    <ClCompile Include="tool\helper\mem_help.cpp" />
+    <ClCompile Include="tool\helper\mh.cpp" />
+    <ClCompile Include="tool\helper\string_h.cpp" />
+    <ClCompile Include="tool\helper\time_h.cpp" />
+    <ClCompile Include="tool\math\pr_math.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external\glad\glad.h" />
+    <ClInclude Include="external\hdrloader.h" />
+    <ClInclude Include="external\imgui\imconfig.h" />
+    <ClInclude Include="external\imgui\imgui.h" />
+    <ClInclude Include="external\imgui\imgui_internal.h" />
+    <ClInclude Include="external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="external\qoi\qoa.h" />
+    <ClInclude Include="external\qoi\qoi.h" />
+    <ClInclude Include="external\stb_image.h" />
+    <ClInclude Include="seek\core\core.h" />
+    <ClInclude Include="seek\core\core_global.h" />
+    <ClInclude Include="seek\core\gui\draw_ui.h" />
+    <ClInclude Include="seek\core\pass\draw_pass.h" />
+    <ClInclude Include="seek\core\pcarmera.h" />
+    <ClInclude Include="seek\core\platform\wcore_sdl.h" />
+    <ClInclude Include="seek\core\text\draw_text.h" />
+    <ClInclude Include="seek\device\pursuit_device.h" />
+    <ClInclude Include="seek\device\pursuit_gl.h" />
+    <ClInclude Include="seek\drawable\benchmark\gltf_view.h" />
+    <ClInclude Include="seek\drawable\benchmark\model_viewer.h" />
+    <ClInclude Include="seek\drawable\render\base_render.h" />
+    <ClInclude Include="seek\menu\console.h" />
+    <ClInclude Include="seek\menu\control_panel.h" />
+    <ClInclude Include="seek\menu\entry_manager.h" />
+    <ClInclude Include="seek\menu\entry_view.h" />
+    <ClInclude Include="seek\rmd\gl\gl_batch.h" />
+    <ClInclude Include="seek\rmd\gl\gl_buffer.h" />
+    <ClInclude Include="seek\rmd\gl\gl_core.h" />
+    <ClInclude Include="seek\rmd\gl\gl_default.h" />
+    <ClInclude Include="seek\rmd\gl\gl_define.h" />
+    <ClInclude Include="seek\rmd\gl\gl_global.h" />
+    <ClInclude Include="seek\rmd\gl\gl_include.h" />
+    <ClInclude Include="seek\rmd\gl\gl_pipline.h" />
+    <ClInclude Include="seek\rmd\gl\gl_primitive.h" />
+    <ClInclude Include="seek\rmd\gl\gl_program.h" />
+    <ClInclude Include="seek\rmd\gl\gl_texture.h" />
+    <ClInclude Include="seek\rmd\gl\gl_uniform.h" />
+    <ClInclude Include="seek\rmd\gl\gl_vertex.h" />
+    <ClInclude Include="seek\rmd\gl\gl_view.h" />
+    <ClInclude Include="seek\run\pursuit_app.h" />
+    <ClInclude Include="seek\run\seek_runner.h" />
+    <ClInclude Include="seek\section\enum\attachment_em.h" />
+    <ClInclude Include="seek\section\enum\camera_em.h" />
+    <ClInclude Include="seek\section\enum\config_em.h" />
+    <ClInclude Include="seek\section\enum\gltype_em.h" />
+    <ClInclude Include="seek\section\enum\key_em.h" />
+    <ClInclude Include="seek\section\enum\material_em.h" />
+    <ClInclude Include="seek\section\enum\uniform_em.h" />
+    <ClInclude Include="seek\section\enum\winplat_em.h" />
+    <ClInclude Include="seek\section\graph\font_def.h" />
+    <ClInclude Include="seek\section\graph\gl_def.h" />
+    <ClInclude Include="seek\section\graph\material_def.h" />
+    <ClInclude Include="seek\section\graph\model_def.h" />
+    <ClInclude Include="seek\section\graph\shader_def.h" />
+    <ClInclude Include="seek\section\graph\uniform_def.h" />
+    <ClInclude Include="seek\section\martrix\cg_def.h" />
+    <ClInclude Include="seek\section\martrix\sys_def.h" />
+    <ClInclude Include="seek\style\font\fonts.h" />
+    <ClInclude Include="seek\ui\gl\imgui_impl_opengl3.h" />
+    <ClInclude Include="seek\ui\gl\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="seek\ui\seek_gl.h" />
+    <ClInclude Include="seek\ui\imgui_impl_sdl3.h" />
+    <ClInclude Include="seek\ui\seek_ui.h" />
+    <ClInclude Include="seek\ui\vk\imgui_impl_vulkan.h" />
+    <ClInclude Include="seek\view\3D\loader\loader_md.h" />
+    <ClInclude Include="seek\view\3D\model\modelv.h" />
+    <ClInclude Include="system\config\platform_def.h" />
+    <ClInclude Include="system\file\image.h" />
+    <ClInclude Include="system\file\sys_file.h" />
+    <ClInclude Include="system\file\sys_text.h" />
+    <ClInclude Include="system\logger\logger.h" />
+    <ClInclude Include="system\logger\type_def.h" />
+    <ClInclude Include="tool\helper\imgui_help.h" />
+    <ClInclude Include="tool\helper\mem_help.h" />
+    <ClInclude Include="tool\helper\mh.h" />
+    <ClInclude Include="tool\helper\obf.h" />
+    <ClInclude Include="tool\helper\singletonh.h" />
+    <ClInclude Include="tool\helper\string_h.h" />
+    <ClInclude Include="tool\helper\time_h.h" />
+    <ClInclude Include="tool\math\pr_math.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="external\svpng.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
