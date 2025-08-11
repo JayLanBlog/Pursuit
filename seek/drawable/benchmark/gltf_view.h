@@ -48,7 +48,7 @@ namespace MarkView {
 		}
 
 	private:
-		unsigned int animIndex = 4;
+		unsigned int animIndex = 5;
 		unsigned int animCurrentFrame = 0;
 		ModelAnimation* modelAnimations;
 		Vector3 position = { 0.0f, 0.0f, 0.0f };

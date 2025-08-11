@@ -37,5 +37,6 @@ namespace DRAW {
 		// Get default framebuffer height
 		int GetFramebufferHeight(void);
 
+		void ActiveDrawBuffers(int count);
 	}
 }

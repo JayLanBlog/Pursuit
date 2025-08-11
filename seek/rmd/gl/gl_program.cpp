@@ -20,8 +20,13 @@ namespace DRAW {
 			else vertexShaderId = PLGL.State.defaultVShaderId;
 			// Compile fragment shader (if provided)
 			// NOTE: If not vertex shader is provided, use default one
-			if (fsCode != NULL) fragmentShaderId = CompileShader(fsCode, GL_FRAGMENT_SHADER);
-			 else fragmentShaderId = PLGL.State.defaultFShaderId;
+			if (fsCode != NULL) 
+			{
+				fragmentShaderId = CompileShader(fsCode, GL_FRAGMENT_SHADER); 
+			}
+			else { 
+				fragmentShaderId = PLGL.State.defaultFShaderId;
+			}
 
 			// In case vertex and fragment shader are the default ones, no need to recompile, we can just assign the default shader program id
 			if ((vertexShaderId == PLGL.State.defaultVShaderId) && (fragmentShaderId == PLGL.State.defaultFShaderId)) id = PLGL.State.defaultShaderId;
@@ -66,7 +71,16 @@ namespace DRAW {
 			UnloadFileText(fShaderStr);
 			return shader;
 		}
-
+		void SetShader(unsigned int id, int* locs) {
+#if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)
+			if (PLGL.State.currentShaderId != id)
+			{
+				DrawRenderBatch(PLGL.currentBatch);
+				PLGL.State.currentShaderId = id;
+				PLGL.State.currentShaderLocs = locs;
+			}
+#endif
+		}
 		// Get default shader locs
 		int* GetShaderLocsDefault() {
 

@@ -8,6 +8,7 @@ void LoadFontDefault(void);
 void UnloadFontDefault(void);
 #endif
 extern Font defaultFont;
+
 // Check if a font is valid (font data loaded)
 // WARNING: GPU texture not checked
 bool IsFontValid(Font font);

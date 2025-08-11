@@ -20,6 +20,13 @@ void EndMode3D(void);                                       // Ends 3D mode and 
 //void BeginVrStereoMode(VrStereoConfig config);              // Begin stereo rendering (requires VR simulator)
 //void EndVrStereoMode(void);                                 // End stereo rendering (requires VR simulator)
 void  Begin(int mode);
-
+void BeginTextureMode(RenderTexture2D target);
+void EndTextureMode(void);
 // Finish vertex providing
 void End(void);
+
+void BeginShaderMode(Shader shader);
+
+void EndShaderMode(void);
+
+void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);

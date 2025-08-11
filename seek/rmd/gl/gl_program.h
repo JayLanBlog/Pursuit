@@ -50,5 +50,7 @@ namespace DRAW {
 		// Load shader storage buffer object (SSBO)
 		 unsigned int LoadShaderBuffer(unsigned int size, const void* data, int usageHint);
 		 int* GetShaderLocsDefault(void);
+
+		 void SetShader(unsigned int id, int* locs);
 	}
 }

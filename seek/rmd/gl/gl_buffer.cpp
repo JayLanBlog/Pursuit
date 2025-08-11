@@ -5,6 +5,36 @@
 namespace DRAW {
 	namespace GL {
 
+        void ActiveDrawBuffers(int count) {
+#if ((defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES3)) && defined(RLGL_RENDER_TEXTURES_HINT))
+            // NOTE: Maximum number of draw buffers supported is implementation dependant,
+            // it can be queried with glGet*() but it must be at least 8
+            //GLint maxDrawBuffers = 0;
+            //glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
+
+            if (count > 0)
+            {
+                if (count > 8) TRACELOG(LOG_WARNING, "GL: Max color buffers limited to 8");
+                else
+                {
+                    unsigned int buffers[8] = {
+                        GL_COLOR_ATTACHMENT0,
+                        GL_COLOR_ATTACHMENT1,
+                        GL_COLOR_ATTACHMENT2,
+                        GL_COLOR_ATTACHMENT3,
+                        GL_COLOR_ATTACHMENT4,
+                        GL_COLOR_ATTACHMENT5,
+                        GL_COLOR_ATTACHMENT6,
+                        GL_COLOR_ATTACHMENT7,
+                    };
+
+                    glDrawBuffers(count, buffers);
+                }
+            }
+            else TRACELOG(LOG_WARNING, "GL: One color buffer active by default");
+#endif
+        }
+
 		unsigned int LoadFramebuffer(void) {
 			unsigned int fboId = 0;
 			glGenFramebuffers(1, &fboId);       // Create the framebuffer object

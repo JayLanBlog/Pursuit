@@ -9,7 +9,13 @@
 #include <core/pcarmera.h>
 #include <drawable/benchmark/model_viewer.h>
 #include <drawable/benchmark/gltf_view.h>
-
+#include <drawable/benchmark/pbr_view.h>
+#include <drawable/benchmark/shadow_view.h>
+#include <drawable/benchmark/rectangle_view.h>
+#include <drawable/benchmark/shader_draw.h>
+#include <drawable/benchmark/derferender_view.h>
+#include <drawable/sdf/sdf_base.h>
+using namespace SDF;
 using namespace ModelView;
 using namespace MarkView;
 namespace Seek {
@@ -21,11 +27,33 @@ namespace Seek {
 			const int screenWidth = 2000;
 			const int screenHeight = 1280;
 			GltfView actor;
+			ModerActor model;
+			PBRView pbrView;
+			ShadowView shadowView;
+
+			RoundedRectView round;
+			ShaderHibrid hibird;
+
+			DeferedRenderView deffered;
+
+			SDFBase baseSdf;
+			
+
+
 			SeekerApp() {
+				//pbrView.EnbleConfig();
+			//	shadowView.EnablePiplineState();
 				Create();
 				Init();
 				//render.LoadPritiveShader();
-				actor.LoadIn();
+				//actor.LoadIn();
+				//pbrView.LoadPBR();
+				//shadowView.CreateAndInitialize();
+			//	round.CreateRectange();
+				//hibird.LoaderScene(screenWidth, screenHeight);
+				//deffered.LoaderScene(screenWidth, screenHeight);
+				baseSdf.LoadSdfFile("resource/shader/sdf/sher.fs",screenWidth,screenHeight);
+				//model.LoadIn();
 				SetTargetFPS(60);
 			}
 			
@@ -36,15 +64,30 @@ namespace Seek {
 				//render.MakeGeometry();
 			}
 
+			
+
 			virtual void Run() {
 				// Main game loop
 				int i = 0;
 				//DisableCursor();                // Limit cursor to relative movement inside the window
 				while (!WindowShouldClose()) {
-					actor.Animation();
+					//actor.Animation();
+					//pbrView.Update();
+					//shadowView.Tick();
+					//hibird.Tick();
+					//hibird.TextureModelRender();
+				//	deffered.Tick();
+					baseSdf.Tick();
 					BeginDrawing();
 					ClearBackground(RAYWHITE);
-					actor.Shaow();
+					//round.Draw(screenWidth, screenHeight);
+					//shadowView.Draw();
+					//actor.Shaow();
+					//pbrView.Draw();
+					//model.Shaow();
+				//	hibird.Render();
+				//	deffered.Render();
+					baseSdf.Draw();
 					DrawFPS(500, 300);
 					EndDrawing();
 				}    // Detect window close button or ESC key

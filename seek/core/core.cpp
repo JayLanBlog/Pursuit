@@ -8,6 +8,7 @@
 #include <section/enum/config_em.h>
 #include <core/text/draw_text.h>
 #include <section/martrix/cg_def.h>
+#include <core/text/draw_shape.h>
 using namespace System;
 using namespace Seek;
 using namespace DRAW::GL;
@@ -105,12 +106,12 @@ void InitWindow(int width, int height, const char* title) {
     if (CORE.Window.flags & FLAG_MSAA_4X_HINT)
     {
         // NOTE: We try to maxime rec padding to avoid pixel bleeding on MSAA filtering
-      //  SetShapesTexture(GetFontDefault().texture, { rec.x + 2, rec.y + 2, 1, 1 });
+        SetShapesTexture(GetFontDefault().texture, { rec.x + 2, rec.y + 2, 1, 1 });
     }
     else
     {
         // NOTE: We set up a 1px padding on char rectangle to avoid pixel bleeding
-        //SetShapesTexture(GetFontDefault().texture,  { rec.x + 1, rec.y + 1, rec.width - 2, rec.height - 2 });
+        SetShapesTexture(GetFontDefault().texture,  { rec.x + 1, rec.y + 1, rec.width - 2, rec.height - 2 });
     }
 #endif
 #endif
@@ -628,4 +629,126 @@ Matrix GetCameraMatrix2D(Camera2D camera) {
     matTransform = MatrixMultiply(MatrixMultiply(matOrigin, MatrixMultiply(matScale, matRotation)), matTranslation);
 
     return matTransform;
+}
+
+
+void SetConfigFlags(unsigned int flags) {
+    if (CORE.Window.ready) TRACELOG(LOG_WARNING, "WINDOW: SetConfigFlags called after window initialization, Use \"SetWindowState\" to set flags instead");
+    // Selected flags are set but not evaluated at this point,
+  // flag evaluation happens at InitWindow() or SetWindowState()
+    CORE.Window.flags |= flags;
+}
+
+
+// Get shader uniform location
+int GetShaderLocation(Shader shader, const char* uniformName)
+{
+    return GetLocationUniform(shader.id, uniformName);
+}
+
+// Check if a key has been pressed once
+bool IsKeyPressed(int key)
+{
+
+    bool pressed = false;
+
+    if ((key > 0) && (key < MAX_KEYBOARD_KEYS))
+    {
+        if ((CORE.Input.Keyboard.previousKeyState[key] == 0) && (CORE.Input.Keyboard.currentKeyState[key] == 1)) pressed = true;
+    }
+
+    return pressed;
+}
+
+// Check if a key has been pressed again
+bool IsKeyPressedRepeat(int key)
+{
+    bool repeat = false;
+
+    if ((key > 0) && (key < MAX_KEYBOARD_KEYS))
+    {
+        if (CORE.Input.Keyboard.keyRepeatInFrame[key] == 1) repeat = true;
+    }
+
+    return repeat;
+}
+
+
+
+// Check if a key has been released once
+bool IsKeyReleased(int key)
+{
+    bool released = false;
+
+    if ((key > 0) && (key < MAX_KEYBOARD_KEYS))
+    {
+        if ((CORE.Input.Keyboard.previousKeyState[key] == 1) && (CORE.Input.Keyboard.currentKeyState[key] == 0)) released = true;
+    }
+
+    return released;
+}
+// Check if a key is NOT being pressed (key not held down)
+bool IsKeyUp(int key)
+{
+    bool up = false;
+
+    if ((key > 0) && (key < MAX_KEYBOARD_KEYS))
+    {
+        if (CORE.Input.Keyboard.currentKeyState[key] == 0) up = true;
+    }
+
+    return up;
+}
+
+// Get the last key pressed
+int GetKeyPressed(void)
+{
+    int value = 0;
+
+    if (CORE.Input.Keyboard.keyPressedQueueCount > 0)
+    {
+        // Get character from the queue head
+        value = CORE.Input.Keyboard.keyPressedQueue[0];
+
+        // Shift elements 1 step toward the head
+        for (int i = 0; i < (CORE.Input.Keyboard.keyPressedQueueCount - 1); i++)
+            CORE.Input.Keyboard.keyPressedQueue[i] = CORE.Input.Keyboard.keyPressedQueue[i + 1];
+
+        // Reset last character in the queue
+        CORE.Input.Keyboard.keyPressedQueue[CORE.Input.Keyboard.keyPressedQueueCount - 1] = 0;
+        CORE.Input.Keyboard.keyPressedQueueCount--;
+    }
+
+    return value;
+}
+
+
+// Get the last char pressed
+int GetCharPressed(void)
+{
+    int value = 0;
+
+    if (CORE.Input.Keyboard.charPressedQueueCount > 0)
+    {
+        // Get character from the queue head
+        value = CORE.Input.Keyboard.charPressedQueue[0];
+
+        // Shift elements 1 step toward the head
+        for (int i = 0; i < (CORE.Input.Keyboard.charPressedQueueCount - 1); i++)
+            CORE.Input.Keyboard.charPressedQueue[i] = CORE.Input.Keyboard.charPressedQueue[i + 1];
+
+        // Reset last character in the queue
+        CORE.Input.Keyboard.charPressedQueue[CORE.Input.Keyboard.charPressedQueueCount - 1] = 0;
+        CORE.Input.Keyboard.charPressedQueueCount--;
+    }
+
+    return value;
+}
+
+
+// Set a custom key to exit program
+// NOTE: default exitKey is set to ESCAPE
+void SetExitKey(int key)
+{
+    CORE.Input.Keyboard.exitKey = key;
 }

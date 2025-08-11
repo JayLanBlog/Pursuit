@@ -58,6 +58,11 @@ void SwapScreenBuffer(void)
 {
     SDL_GL_SwapWindow(platform.window);
 }
+// Get physical key name.
+const char* GetKeyName(int key)
+{
+    return SDL_GetKeyName(key);
+}
 
 // SDL3 Migration Layer made to avoid `ifdefs` inside functions when we can.
 #if defined(PLATFORM_DESKTOP_SDL3)

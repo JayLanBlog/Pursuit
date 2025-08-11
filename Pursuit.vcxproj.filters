@@ -143,6 +143,12 @@
     <ClCompile Include="seek\core\text\draw_text.cpp">
       <Filter>seek\core\text</Filter>
     </ClCompile>
+    <ClCompile Include="seek\core\pass\draw_pass2d.cpp">
+      <Filter>seek\core\pass</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\text\draw_shape.cpp">
+      <Filter>seek\core\text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -270,6 +276,9 @@
     </Filter>
     <Filter Include="seek\core\text">
       <UniqueIdentifier>{a33e3fea-d6c5-48d3-a95c-397ea511e300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\sdf">
+      <UniqueIdentifier>{cd9413ab-c5de-4258-b4cd-5a5f10ba45bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -518,6 +527,30 @@
     </ClInclude>
     <ClInclude Include="seek\drawable\benchmark\gltf_view.h">
       <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\pbr_view.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\shadow_view.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\rectangle_view.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\pass\draw_pass2d.h">
+      <Filter>seek\core\pass</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\text\draw_shape.h">
+      <Filter>seek\core\text</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\shader_draw.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\derferender_view.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\sdf\sdf_base.h">
+      <Filter>seek\drawable\sdf</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

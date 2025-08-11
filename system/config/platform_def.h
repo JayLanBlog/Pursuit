@@ -1,5 +1,6 @@
 #pragma once
-
+#include <iostream>
+using namespace std;
 #define GRAPHICS_API_OPENGL_33
 
 #define SUPPORT_STANDARD_FILEIO
@@ -101,3 +102,12 @@
 #define SUPPORT_MODULE_RTEXT 1
 
 #define SUPPORT_MODULE_RSHAPES 1
+
+#define MAX_LIGHTS  4           // Max dynamic lights supported by shader
+
+
+#define MAX_CUBES   30
+
+#define SUPPORT_QUADS_DRAW_MODE         1
+
+#define RLGL_RENDER_TEXTURES_HINT

@@ -12,6 +12,11 @@ using namespace Seek;
 #define PL_DEFAULT_BATCH_MAX_TEXTURE_UNITS     4      // Maximum number of textures units that can be activated on batch drawing (SetShaderValueTexture())
 
 
+
+#define PL_READ_FRAMEBUFFER                     0x8CA8      // GL_READ_FRAMEBUFFER
+#define PL_DRAW_FRAMEBUFFER                     0x8CA9      // GL_DRAW_FRAMEBUFFER
+
+
 // Default internal render batch elements limits
 #ifndef PL_DEFAULT_BATCH_BUFFER_ELEMENTS
 #if defined(GRAPHICS_API_OPENGL_11) || defined(GRAPHICS_API_OPENGL_33)

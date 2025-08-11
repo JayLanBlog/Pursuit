@@ -32,6 +32,9 @@ namespace DRAW {
 
 	namespace GL {
 
+
+		// Get color normalized as float [0..1]
+		Vector4 ColorNormalize(Color color);
 		unsigned int GetTextureIdDefault(void);
 
 		// Load a texture from image data
@@ -81,6 +84,9 @@ namespace DRAW {
 #endif
 		// Set current texture to use
 		void SetTexture(unsigned int id);
+
+		// Get color with alpha applied, alpha goes from 0.0f to 1.0f
+		Color ColorAlpha(Color color, float alpha);
 
 		// Select and active a texture slot
 		void ActiveTextureSlot(int slot);

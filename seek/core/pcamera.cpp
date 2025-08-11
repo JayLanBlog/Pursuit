@@ -13,11 +13,7 @@
 #define CAMERA_CULL_DISTANCE_NEAR   PL_CULL_DISTANCE_NEAR
 #define CAMERA_CULL_DISTANCE_FAR    PL_CULL_DISTANCE_FAR
 #endif
-
-
 using namespace PMath;
-
-
 
 // Returns the camera projection matrix
 Matrix GetCameraProjectionMatrix(Camera* camera, float aspect) {
@@ -35,6 +31,8 @@ Matrix GetCameraProjectionMatrix(Camera* camera, float aspect) {
 
     return MatrixIdentity();
 }
+
+
 Vector3 GetCameraForward(Camera* camera)
 {
     return Vector3Normalize(Vector3Subtract(camera->target, camera->position));
@@ -249,8 +247,6 @@ void UpdateCamera(Camera* camera, int mode) {
         if (IsKeyDown(KEY_E)) CameraRoll(camera, cameraRotationSpeed);
 
     }
-
-
     // Camera movement
     // Camera pan (for CAMERA_FREE)
     if ((mode == CAMERA_FREE) && (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE)))
@@ -267,7 +263,6 @@ void UpdateCamera(Camera* camera, int mode) {
         CameraYaw(camera, -mousePositionDelta.x * CAMERA_MOUSE_MOVE_SENSITIVITY, rotateAroundTarget);
         CameraPitch(camera, -mousePositionDelta.y * CAMERA_MOUSE_MOVE_SENSITIVITY, lockView, rotateAroundTarget, rotateUp);
     }
-
 
     // Keyboard support
     if (IsKeyDown(KEY_W)) CameraMoveForward(camera, cameraMoveSpeed, moveInWorldPlane);

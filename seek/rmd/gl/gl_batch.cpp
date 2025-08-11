@@ -305,8 +305,6 @@ namespace Batch {
 					glVertexAttribPointer(PLGL.State.currentShaderLocs[PL_SHADER_LOC_VERTEX_COLOR], 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
 					glEnableVertexAttribArray(PLGL.State.currentShaderLocs[PL_SHADER_LOC_VERTEX_COLOR]);
 					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, batch->vertexBuffer[batch->currentBuffer].vboId[4]);
-
-
 				}
 
 				// Setup some default shader values

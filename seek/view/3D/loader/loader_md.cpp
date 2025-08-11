@@ -105,21 +105,16 @@ namespace Loader {
 #endif
 		mesh->vaoId = LoadVertexArray();
 		EnableVertexArray(mesh->vaoId);
-
-		// NOTE: Vertex attributes must be uploaded considering default locations points and available vertex data
-
-   // Enable vertex attributes: position (shader-location = 0)
 		void* vertices = (mesh->animVertices != NULL) ? mesh->animVertices : mesh->vertices;
 		mesh->vboId[PL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION] = LoadVertexBuffer(vertices, mesh->vertexCount * 3 * sizeof(float), dynamic);
 		SetVertexAttribute(PL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION, 3, PL_FLOAT, 0, 0, 0);
 		EnableVertexAttribute(PL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION);
 
+
 		// Enable vertex attributes: texcoords (shader-location = 1)
 		mesh->vboId[PL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD] = LoadVertexBuffer(mesh->texcoords, mesh->vertexCount * 2 * sizeof(float), dynamic);
 		SetVertexAttribute(PL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD, 2, PL_FLOAT, 0, 0, 0);
 		EnableVertexAttribute(PL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD);
-
-
 		// WARNING: When setting default vertex attribute values, the values for each generic vertex attribute
 		// is part of current state, and it is maintained even if a different program object is used
 		if (mesh->normals != NULL)

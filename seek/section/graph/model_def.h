@@ -76,5 +76,48 @@ namespace Seek {
         Vector3 min;            // Minimum vertex box-corner
         Vector3 max;            // Maximum vertex box-corner
     } BoundingBox;
+
+
+    // Light type
+    typedef enum {
+        LIGHT_DIRECTIONAL = 0,
+        LIGHT_POINT,
+        LIGHT_SPOT
+    } LightType;
+
+    //// Light data
+    typedef struct {
+        int type;
+        int enabled;
+        Vector3 position;
+        Vector3 target;
+        float color[4];
+        float intensity;
+
+        // Shader light parameters locations
+        int typeLoc;
+        int enabledLoc;
+        int positionLoc;
+        int targetLoc;
+        int colorLoc;
+        int intensityLoc;
+    } Light;
+
+    typedef struct {
+        int type;
+        bool enabled;
+        Vector3 position;
+        Vector3 target;
+        Color color;
+        float attenuation;
+
+        // Shader locations
+        int enabledLoc;
+        int typeLoc;
+        int positionLoc;
+        int targetLoc;
+        int colorLoc;
+        int attenuationLoc;
+    } MLight;
 }
 

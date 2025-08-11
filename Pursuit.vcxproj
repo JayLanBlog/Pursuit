@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -167,8 +167,10 @@
     <ClCompile Include="seek\core\core.cpp" />
     <ClCompile Include="seek\core\gui\draw_ui.cpp" />
     <ClCompile Include="seek\core\pass\draw_pass.cpp" />
+    <ClCompile Include="seek\core\pass\draw_pass2d.cpp" />
     <ClCompile Include="seek\core\pcamera.cpp" />
     <ClCompile Include="seek\core\platform\wcore_sdl.cpp" />
+    <ClCompile Include="seek\core\text\draw_shape.cpp" />
     <ClCompile Include="seek\core\text\draw_text.cpp" />
     <ClCompile Include="seek\device\pursuit_gl.cpp" />
     <ClCompile Include="seek\menu\console.cpp" />
@@ -220,14 +222,22 @@
     <ClInclude Include="seek\core\core_global.h" />
     <ClInclude Include="seek\core\gui\draw_ui.h" />
     <ClInclude Include="seek\core\pass\draw_pass.h" />
+    <ClInclude Include="seek\core\pass\draw_pass2d.h" />
     <ClInclude Include="seek\core\pcarmera.h" />
     <ClInclude Include="seek\core\platform\wcore_sdl.h" />
+    <ClInclude Include="seek\core\text\draw_shape.h" />
     <ClInclude Include="seek\core\text\draw_text.h" />
     <ClInclude Include="seek\device\pursuit_device.h" />
     <ClInclude Include="seek\device\pursuit_gl.h" />
+    <ClInclude Include="seek\drawable\benchmark\derferender_view.h" />
     <ClInclude Include="seek\drawable\benchmark\gltf_view.h" />
     <ClInclude Include="seek\drawable\benchmark\model_viewer.h" />
+    <ClInclude Include="seek\drawable\benchmark\pbr_view.h" />
+    <ClInclude Include="seek\drawable\benchmark\rectangle_view.h" />
+    <ClInclude Include="seek\drawable\benchmark\shader_draw.h" />
+    <ClInclude Include="seek\drawable\benchmark\shadow_view.h" />
     <ClInclude Include="seek\drawable\render\base_render.h" />
+    <ClInclude Include="seek\drawable\sdf\sdf_base.h" />
     <ClInclude Include="seek\menu\console.h" />
     <ClInclude Include="seek\menu\control_panel.h" />
     <ClInclude Include="seek\menu\entry_manager.h" />

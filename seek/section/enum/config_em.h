@@ -23,3 +23,4 @@ typedef enum {
     FLAG_MSAA_4X_HINT = 0x00000020,   // Set to try enabling MSAA 4X
     FLAG_INTERLACED_HINT = 0x00010000    // Set to try enabling interlaced video format (for V3D)
 } ConfigFlags;
+

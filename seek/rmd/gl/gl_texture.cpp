@@ -7,6 +7,30 @@
 using namespace System;
 namespace DRAW {
 	namespace GL {
+
+		// Get color with alpha applied, alpha goes from 0.0f to 1.0f
+		Color ColorAlpha(Color color, float alpha) {
+			Color result = color;
+
+			if (alpha < 0.0f) alpha = 0.0f;
+			else if (alpha > 1.0f) alpha = 1.0f;
+
+			result.a = (unsigned char)(255.0f * alpha);
+
+			return result;
+		}
+
+		// Get color normalized as float [0..1]
+		Vector4 ColorNormalize(Color color) {
+			Vector4 result;
+
+			result.x = (float)color.r / 255.0f;
+			result.y = (float)color.g / 255.0f;
+			result.z = (float)color.b / 255.0f;
+			result.w = (float)color.a / 255.0f;
+
+			return result;
+		}
 		// Load a texture from image data
 		// NOTE: image is not unloaded, it must be done manually
 		Texture2D LoadTextureFromImage(Image image) {

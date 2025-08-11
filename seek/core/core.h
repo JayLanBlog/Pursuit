@@ -51,6 +51,22 @@ void SetTargetFPS(int fps);
 int GetFPS(void);
 // Get time in seconds for last frame drawn (delta time)
 float GetFrameTime(void);
+
+void SetConfigFlags(unsigned int flags);
+
+// Get shader uniform location
+int GetShaderLocation(Shader shader, const char* uniformName);
+
+bool IsKeyPressed(int key);
+bool IsKeyPressedRepeat(int key);
+bool IsKeyDown(int key);
+bool IsKeyReleased(int key);
+bool IsKeyUp(int key);
+int GetKeyPressed(void);
+int GetCharPressed(void);
+const char* GetKeyName(int key);
+void SetExitKey(int key);
+
 //void SetWindowState(unsigned int flags);                    // Set window configuration state using flags
 //void ClearWindowState(unsigned int flags);                  // Clear window configuration state flags
 //void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed, resizes monitor to match window resolution
@@ -69,8 +85,8 @@ float GetFrameTime(void);
 //void SetWindowOpacity(float opacity);                       // Set window opacity [0.0f..1.0f]
 //void SetWindowFocused(void);                                // Set window focused
 //void* GetWindowHandle(void);                                // Get native window handle
-//int GetScreenWidth(void);                                   // Get current screen width
-//int GetScreenHeight(void);                                  // Get current screen height
+int GetScreenWidth(void);                                   // Get current screen width
+int GetScreenHeight(void);                                  // Get current screen height
 //int GetRenderWidth(void);                                   // Get current render width (it considers HiDPI)
 //int GetRenderHeight(void);                                  // Get current render height (it considers HiDPI)
 //int GetMonitorCount(void);                                  // Get number of connected monitors

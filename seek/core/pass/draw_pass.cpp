@@ -1,18 +1,60 @@
 #include "draw_pass.h"
-#include <rmd/gl/gl_view.h>
-#include <rmd/gl/gl_global.h>
-#include <rmd/gl/gl_buffer.h>
+#include <rmd/gl/gl_include.h>
 #include <core/platform/wcore_sdl.h>
 #include <math/pr_math.h>
 #include <core/core.h>
-#include <rmd/gl/gl_pipline.h>
 #include <menu/console.h>
 #include <core/gui/draw_ui.h>
 #include <section/enum/camera_em.h>
+#include <core/text/draw_text.h>
 using namespace PiplineState;
 using namespace PMath;
-
 using namespace DRAW::GL;
+
+void EndTextureMode(void) {
+
+    DrawRenderBatchActive();      // Update and draw internal render batch
+    DisableFramebuffer();         // Disable render target (fbo)
+    // Set viewport to default framebuffer size
+    SetupViewport(CORE.Window.render.width, CORE.Window.render.height);
+    // Go back to the modelview state from BeginDrawing since we are back to the default FBO
+    MatrixMode(PL_MODELVIEW);     // Switch back to modelview matrix
+    LoadIdentity();               // Reset current matrix (modelview)
+    MultMatrixf(MatrixToFloatV(CORE.Window.screenScale).v); // Apply screen scaling if required
+    // Reset current fbo to screen size
+    CORE.Window.currentFbo.width = CORE.Window.render.width;
+    CORE.Window.currentFbo.height = CORE.Window.render.height;
+    CORE.Window.usingFbo = false;
+}
+
+void BeginTextureMode(RenderTexture2D target) {
+    DrawRenderBatchActive();      // Update and draw internal render batch
+
+    EnableFramebuffer(target.id); // Enable render target
+
+    // Set viewport and RLGL internal framebuffer size
+    Viewport(0, 0, target.texture.width, target.texture.height);
+    SetFramebufferWidth(target.texture.width);
+    SetFramebufferHeight(target.texture.height);
+
+    MatrixMode(PL_PROJECTION);    // Switch to projection matrix
+    LoadIdentity();               // Reset current matrix (projection)
+
+    // Set orthographic projection to current framebuffer size
+    // NOTE: Configured top-left corner as (0, 0)
+    Ortho(0, target.texture.width, target.texture.height, 0, 0.0f, 1.0f);
+
+    MatrixMode(PL_MODELVIEW);     // Switch back to modelview matrix
+    LoadIdentity();               // Reset current matrix (modelview)
+
+    //rlScalef(0.0f, -1.0f, 0.0f);  // Flip Y-drawing (?)
+
+    // Setup current width/height for proper aspect ratio
+    // calculation when using BeginTextureMode()
+    CORE.Window.currentFbo.width = target.texture.width;
+    CORE.Window.currentFbo.height = target.texture.height;
+    CORE.Window.usingFbo = true;
+}
 
 void BeginDrawing(void) {
     // WARNING: Previously to BeginDrawing() other render textures drawing could happen,
@@ -230,4 +272,25 @@ void End(void)
     // Correct increment formula would be: depthInc = (zfar - znear)/pow(2, bits)
     PLGL.currentBatch->currentDepth += (1.0f / 20000.0f);
 }
+
 #endif
+
+// Begin custom shader mode
+void BeginShaderMode(Shader shader)
+{
+    SetShader(shader.id, shader.locs);
+}
+
+
+// End custom shader mode (returns to default shader)
+void EndShaderMode(void)
+{
+    SetShader(GetShaderIdDefault(), GetShaderLocsDefault());
+}
+
+void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint) {
+    Rectangle dest = { position.x, position.y, fabsf(source.width), fabsf(source.height) };
+    Vector2 origin = { 0.0f, 0.0f };
+
+    DrawTexturePro(texture, source, dest, origin, 0.0f, tint);
+}
