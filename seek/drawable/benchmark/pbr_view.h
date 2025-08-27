@@ -201,8 +201,6 @@ namespace MarkView {
 		void Draw() {
 			
 			BeginMode3D(camera);
-
-
 			// Set floor model texture tiling and emissive color parameters on shader
 			SetShaderValue(shader, textureTilingLoc, &floorTextureTiling, SHADER_UNIFORM_VEC2);
 			Vector4 floorEmissiveColor = ColorNormalize(floor.materials[0].maps[MATERIAL_MAP_EMISSION].color);
@@ -224,7 +222,6 @@ namespace MarkView {
 			// Set old car metallic and roughness values
 			SetShaderValue(shader, metallicValueLoc, &car.materials[0].maps[MATERIAL_MAP_METALNESS].value, SHADER_UNIFORM_FLOAT);
 			SetShaderValue(shader, roughnessValueLoc, &car.materials[0].maps[MATERIAL_MAP_ROUGHNESS].value, SHADER_UNIFORM_FLOAT);
-
 			DrawModel(car, { 0.0f, 0.0f, 0.0f }, 0.25f, WHITE);   // Draw car model
 
 			// Draw spheres to show the lights positions
@@ -239,7 +236,7 @@ namespace MarkView {
 			EndMode3D();
 		}
 		// Models texture tiling parameter can be stored in the Material struct if required (CURRENTLY NOT USED)
-// NOTE: Material.params[4] are available for generic parameters storage (float)
+		// NOTE: Material.params[4] are available for generic parameters storage (float)
 		Vector2 carTextureTiling = { 0.5f, 0.5f };
 		Vector2 floorTextureTiling = { 0.5f, 0.5f };
 		// Create some lights
@@ -251,10 +248,6 @@ namespace MarkView {
 		Model floor;
 		// Load PBR shader and setup all required locations
 		Shader shader;
-
-
-
-		
 	};
 
 

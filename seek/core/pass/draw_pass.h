@@ -1,6 +1,7 @@
 #pragma once
 #include "core/core_global.h"
 
+
 //// Drawing-related functions
 void ClearBackground(Color color);                          // Set background color (framebuffer clear color)
 void BeginDrawing(void);                                    // Setup canvas (framebuffer) to start drawing
@@ -30,3 +31,17 @@ void BeginShaderMode(Shader shader);
 void EndShaderMode(void);
 
 void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);
+
+
+// Draw a texture
+void DrawTexture(Texture2D texture, int posX, int posY, Color tint);
+
+void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);
+
+
+void DrawTextureFx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);
+
+
+
+// Load and draw a cube in NDC
+void LoadDrawCube(void);

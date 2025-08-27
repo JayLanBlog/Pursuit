@@ -2,6 +2,20 @@
 #include <section/martrix/cg_def.h>
 #include <section/graph/model_def.h>
 using namespace Seek;
+
+#include "msf_gif.h"
+#if defined(SUPPORT_SCREEN_CAPTURE)
+extern int screenshotCounter;           // Screenshots counter
+#endif
+
+#if defined(SUPPORT_GIF_RECORDING)
+extern unsigned int gifFrameCounter ;    // GIF frames counter
+extern bool gifRecording;           // GIF recording state     // MSGIF context state
+#endif
+#if defined(SUPPORT_GIF_RECORDING)
+extern MsfGifState gifState;
+#endif
+Vector2 GetWindowScaleDPI(void);
 //Core API
 // Window-related functions
 void InitWindow(int width, int height, const char* title);  // Initialize window and OpenGL context
@@ -106,8 +120,10 @@ int GetScreenHeight(void);                                  // Get current scree
 //void EnableEventWaiting(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
 //void DisableEventWaiting(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
 // Set viewport for a provided width and height
+
 void SetupViewport(int width, int height);
 void WaitTime(double seconds);
+void TakeScreenshot(const char* fileName);
 
 
 

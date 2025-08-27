@@ -43,6 +43,15 @@ namespace DRAW {
 			return location;
 		}
 
+		void SetUniformMatrix3(int locIndex, Matrix3 mat) {
+			float matfloat[16] = {
+				mat.m0, mat.m1, mat.m2,
+				mat.m4, mat.m5, mat.m6,
+				mat.m8, mat.m9, mat.m10,
+			};
+			glUniformMatrix3fv(locIndex, 1, false, matfloat);
+		}
+
 		void SetUniformMatrix(int locIndex, Matrix mat) {
 			float matfloat[16] = {
 				mat.m0, mat.m1, mat.m2, mat.m3,

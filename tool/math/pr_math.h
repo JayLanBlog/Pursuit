@@ -1444,6 +1444,43 @@ namespace PMath {
 
 
     // Get identity matrix
+    RMAPI Matrix3 MatrixIdentity3(void) {
+        Matrix3 result = {  1.0f, 0.0f, 0.0f,
+                            0.0f, 1.0f, 0.0f,
+                            0.0f, 0.0f, 1.0f,
+                         };
+
+        return result;
+    }
+
+    RMAPI Matrix Matrix_Scale(const Matrix* m, Vector3 s)
+    {
+        Matrix out = *m;
+        out.m0 *= s.x; out.m4 *= s.x; out.m8 *= s.x; out.m12 *= s.x;
+        out.m1 *= s.y; out.m5 *= s.y; out.m9 *= s.y; out.m13 *= s.y;
+        out.m2 *= s.z; out.m6 *= s.z; out.m10 *= s.z; out.m14 *= s.z;
+        return out;
+    }
+
+    RMAPI Matrix Matrix_Translate(const Matrix* mat, Vector3 dirpos)
+    {
+        Matrix out;
+
+        // 第 0~2 列直接复制
+        out.m0 = mat->m0;  out.m4 = mat->m4;  out.m8 = mat->m8;  out.m12 = mat->m12;
+        out.m1 = mat->m1;  out.m5 = mat->m5;  out.m9 = mat->m9;  out.m13 = mat->m13;
+        out.m2 = mat->m2;  out.m6 = mat->m6;  out.m10 = mat->m10; out.m14 = mat->m14;
+        out.m3 = mat->m3;  out.m7 = mat->m7;  out.m11 = mat->m11; out.m15 = mat->m15;
+
+        // 第 3 列 = 原矩阵第 3 列 + 平移向量
+        out.m12 += mat->m0 * dirpos.x + mat->m4 * dirpos.y + mat->m8 * dirpos.z;
+        out.m13 += mat->m1 * dirpos.x + mat->m5 * dirpos.y + mat->m9 * dirpos.z;
+        out.m14 += mat->m2 * dirpos.x + mat->m6 * dirpos.y + mat->m10 * dirpos.z;
+        out.m15 += mat->m3 * dirpos.x + mat->m7 * dirpos.y + mat->m11 * dirpos.z;
+
+        return out;
+    }
+    // Get identity matrix
     RMAPI Matrix MatrixIdentity(void)
     {
         Matrix result = { 1.0f, 0.0f, 0.0f, 0.0f,
@@ -1452,6 +1489,74 @@ namespace PMath {
                           0.0f, 0.0f, 0.0f, 1.0f };
 
         return result;
+    }
+
+    RMAPI Matrix3 Matrix4ToMatrix3(const Matrix* m) {
+        return {
+            m->m0, m->m4, m->m8,
+                m->m1, m->m5, m->m9,
+                m->m2, m->m6, m->m10
+        };
+    }
+
+
+
+    /*------------------------------------------------
+     * 功能：对 3×3 矩阵求逆（列主序→列主序）
+     * 返回 0 表示成功，-1 表示不可逆
+     *------------------------------------------------*/
+    RMAPI int invert3x3(const float in[9], float out[9])
+    {
+        const float det =
+            in[0] * (in[4] * in[8] - in[5] * in[7]) -
+            in[3] * (in[1] * in[8] - in[2] * in[7]) +
+            in[6] * (in[1] * in[5] - in[2] * in[4]);
+
+        if (fabsf(det) < 1e-6f) return -1; // 奇异矩阵
+
+        const float invDet = 1.0f / det;
+
+        out[0] = (in[4] * in[8] - in[5] * in[7]) * invDet;
+        out[3] = -(in[1] * in[8] - in[2] * in[7]) * invDet;
+        out[6] = (in[1] * in[5] - in[2] * in[4]) * invDet;
+
+        out[1] = -(in[3] * in[8] - in[5] * in[6]) * invDet;
+        out[4] = (in[0] * in[8] - in[2] * in[6]) * invDet;
+        out[7] = -(in[0] * in[5] - in[2] * in[3]) * invDet;
+
+        out[2] = (in[3] * in[7] - in[4] * in[6]) * invDet;
+        out[5] = -(in[0] * in[7] - in[1] * in[6]) * invDet;
+        out[8] = (in[0] * in[4] - in[1] * in[3]) * invDet;
+
+        return 0;
+    }
+
+    /*------------------------------------------------
+     * 主函数：Matrix → 截取 3×3 → 求逆 → 转置 → Matrix3
+     *------------------------------------------------*/
+    RMAPI Matrix3 Matrix_InvTranspose3x3(const Matrix* m)
+    {
+        /* 1. 截取左上 3×3（列主序）*/
+        float src[9] = {
+            m->m0, m->m1, m->m2, // 第 0 列
+            m->m4, m->m5, m->m6, // 第 1 列
+            m->m8, m->m9, m->m10 // 第 2 列
+        };
+
+        /* 2. 求逆（结果仍为列主序）*/
+        float inv[9];
+        int ok = invert3x3(src, inv);
+        if (ok) {
+            // 不可逆时返回单位矩阵，可按需处理
+            return { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+        }
+
+        /* 3. 对 3×3 逆矩阵再做转置（列主序→行主序）*/
+        return  {
+            inv[0], inv[3], inv[6], // 第 0 行
+                inv[1], inv[4], inv[7], // 第 1 行
+                inv[2], inv[5], inv[8]  // 第 2 行
+        };
     }
 
     // Add two matrices

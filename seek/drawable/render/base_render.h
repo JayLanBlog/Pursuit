@@ -18,8 +18,10 @@ namespace Drawable {
 	class PrimitiveRender : public Render {
 	public:
 		int scrWidth = 2000, scrHeight = 1280;
+
 		std::string vertexUri = "resource/shader/hello.vs";
 		std::string piexclUri = "resource/shader/hello.fs";
+
 		PrimitiveRender() {
 			
 		}

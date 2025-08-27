@@ -2,6 +2,24 @@
 #include <logger/logger.h>
 
 namespace System {
+	// Check if the file exists
+	bool FileExists(const char* fileName)
+	{
+		bool result = false;
+
+#if defined(_WIN32)
+		if (_access(fileName, 0) != -1) result = true;
+#else
+		if (access(fileName, F_OK) != -1) result = true;
+#endif
+
+		// NOTE: Alternatively, stat() can be used instead of access()
+		//#include <sys/stat.h>
+		//struct stat statbuf;
+		//if (stat(filename, &statbuf) == 0) result = true;
+
+		return result;
+	}
 
 
 	// Get pointer to extension for a filename string (includes the dot: .png)

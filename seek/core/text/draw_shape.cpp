@@ -13,6 +13,102 @@ static Texture2D texShapes = { 1, 1, 1, 1, 7 };                // Texture used o
 static Rectangle texShapesRec = { 0.0f, 0.0f, 1.0f, 1.0f };    // Texture source rectangle used on shapes drawing
 
 
+void DrawCircleV(Vector2 center, float radius, Color color) {
+    DrawCircleSector(center, radius, 0, 360, 36, color);
+}
+
+void DrawCircle(int centerX, int centerY, float radius, Color color) {
+    DrawCircleV({ (float)centerX, (float)centerY }, radius, color);
+}
+
+
+// Draw a piece of a circle
+void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color) {
+    if (startAngle == endAngle) return;
+    if (radius <= 0.0f) radius = 0.1f;  // Avoid div by zero
+
+    // Function expects (endAngle > startAngle)
+    if (endAngle < startAngle)
+    {
+        // Swap values
+        float tmp = startAngle;
+        startAngle = endAngle;
+        endAngle = tmp;
+    }
+
+    int minSegments = (int)ceilf((endAngle - startAngle) / 90);
+
+    if (segments < minSegments)
+    {
+        // Calculate the maximum angle between segments based on the error rate (usually 0.5f)
+        float th = acosf(2 * powf(1 - SMOOTH_CIRCLE_ERROR_RATE / radius, 2) - 1);
+        segments = (int)((endAngle - startAngle) * ceilf(2 * PI / th) / 360);
+
+        if (segments <= 0) segments = minSegments;
+    }
+    float stepLength = (endAngle - startAngle) / (float)segments;
+    float angle = startAngle;
+#if defined(SUPPORT_QUADS_DRAW_MODE)
+    SetTexture(GetShapesTexture().id);
+    Rectangle shapeRect = GetShapesTextureRectangle();
+    Begin(PL_QUADS);
+
+    // NOTE: Every QUAD actually represents two segments
+    for (int i = 0; i < segments / 2; i++)
+    {
+        Color4ub(color.r, color.g, color.b, color.a);
+
+        TexCoord2f(shapeRect.x / texShapes.width, shapeRect.y / texShapes.height);
+        Vertex2f(center.x, center.y);
+
+        TexCoord2f((shapeRect.x + shapeRect.width) / texShapes.width, shapeRect.y / texShapes.height);
+        Vertex2f(center.x + cosf(DEG2RAD * (angle + stepLength * 2.0f)) * radius, center.y + sinf(DEG2RAD * (angle + stepLength * 2.0f)) * radius);
+
+        TexCoord2f((shapeRect.x + shapeRect.width) / texShapes.width, (shapeRect.y + shapeRect.height) / texShapes.height);
+        Vertex2f(center.x + cosf(DEG2RAD * (angle + stepLength)) * radius, center.y + sinf(DEG2RAD * (angle + stepLength)) * radius);
+
+        TexCoord2f(shapeRect.x / texShapes.width, (shapeRect.y + shapeRect.height) / texShapes.height);
+        Vertex2f(center.x + cosf(DEG2RAD * angle) * radius, center.y + sinf(DEG2RAD * angle) * radius);
+
+        angle += (stepLength * 2.0f);
+    }
+
+    // NOTE: In case number of segments is odd, we add one last piece to the cake
+    if ((((unsigned int)segments) % 2) == 1)
+    {
+        Color4ub(color.r, color.g, color.b, color.a);
+
+        TexCoord2f(shapeRect.x / texShapes.width, shapeRect.y / texShapes.height);
+        Vertex2f(center.x, center.y);
+
+        TexCoord2f((shapeRect.x + shapeRect.width) / texShapes.width, (shapeRect.y + shapeRect.height) / texShapes.height);
+        Vertex2f(center.x + cosf(DEG2RAD * (angle + stepLength)) * radius, center.y + sinf(DEG2RAD * (angle + stepLength)) * radius);
+
+        TexCoord2f(shapeRect.x / texShapes.width, (shapeRect.y + shapeRect.height) / texShapes.height);
+        Vertex2f(center.x + cosf(DEG2RAD * angle) * radius, center.y + sinf(DEG2RAD * angle) * radius);
+
+        TexCoord2f((shapeRect.x + shapeRect.width) / texShapes.width, shapeRect.y / texShapes.height);
+        Vertex2f(center.x, center.y);
+    }
+
+    SetTexture(0);
+
+    End();
+#else
+    Begin(RL_TRIANGLES);
+    for (int i = 0; i < segments; i++)
+    {
+        Color4ub(color.r, color.g, color.b, color.a);
+
+        Vertex2f(center.x, center.y);
+        Vertex2f(center.x + cosf(DEG2RAD * (angle + stepLength)) * radius, center.y + sinf(DEG2RAD * (angle + stepLength)) * radius);
+        Vertex2f(center.x + cosf(DEG2RAD * angle) * radius, center.y + sinf(DEG2RAD * angle) * radius);
+
+        angle += stepLength;
+    }
+    End();
+#endif
+}
 
 void LoadDrawQuad(void) {
 #if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)

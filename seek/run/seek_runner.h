@@ -15,46 +15,70 @@
 #include <drawable/benchmark/shader_draw.h>
 #include <drawable/benchmark/derferender_view.h>
 #include <drawable/sdf/sdf_base.h>
+#include <drawable/blur/gaussion_blur.h>
+#include <drawable/blur/box_blur.h>
+#include <drawable/blur/kawase_blur.h>
+#include <drawable/blur/bokeh_blur.h>
+#include <drawable/blur/tiltshift_blur.h>
+#include <drawable/blur/iris_blur.h>
+#include <drawable/blur/grainy_blur.h>
+#include <drawable/blur/radial_blur.h>
+#include <drawable/blur/directional_blur.h>
+#include <drawable/gems/version1/water_smulate.h>
+#include <drawable/benchmark/cube_sky.h>
+#include <drawable/benchmark/sky_sample.h>
+#include <drawable/gems/version1/water/water.h>
+#include <drawable/brdf/brdf_light.h>
 using namespace SDF;
 using namespace ModelView;
 using namespace MarkView;
+using namespace BLUR;
+using namespace Smulate;
+using namespace MView;
+using namespace Water;
+using namespace BRDF;
+
 namespace Seek {
 	namespace Run {
 		class SeekerApp : public App {
 		public:
 			// Initialization
-//--------------------------------------------------------------------------------------
+			//--------------------------------------------------------------------------------------
 			const int screenWidth = 2000;
 			const int screenHeight = 1280;
 			GltfView actor;
 			ModerActor model;
 			PBRView pbrView;
 			ShadowView shadowView;
-
 			RoundedRectView round;
 			ShaderHibrid hibird;
-
 			DeferedRenderView deffered;
-
 			SDFBase baseSdf;
-			
+			GaussionBlur gaussionBlur;
+			BoxBlur boxBlur;
+			KawaseBlur kawasBlur;
+			BokehBlur bokehBlur;
+			TiltShiftBlur tiltBlur;
+			IrisBlur irisBlur;
+			GrainyBlur grainyBlur;
+			RadialBlur radialBlur;
+			DirectionBlur dirctionBlur;
+			WaterSmulater waterSm;
 
+			CubeSkyView  sky;
+
+			GLCubeView cubSky;
+
+
+			GerstnerWave water;
+
+			LightBrdf brdf;
 
 			SeekerApp() {
 				//pbrView.EnbleConfig();
-			//	shadowView.EnablePiplineState();
+				//shadowView.EnablePiplineState();
 				Create();
 				Init();
-				//render.LoadPritiveShader();
-				//actor.LoadIn();
-				//pbrView.LoadPBR();
-				//shadowView.CreateAndInitialize();
-			//	round.CreateRectange();
-				//hibird.LoaderScene(screenWidth, screenHeight);
-				//deffered.LoaderScene(screenWidth, screenHeight);
-				baseSdf.LoadSdfFile("resource/shader/sdf/sher.fs",screenWidth,screenHeight);
-				//model.LoadIn();
-				SetTargetFPS(60);
 			}
 			
 			virtual void Create() {
@@ -62,6 +86,30 @@ namespace Seek {
 			}
 			virtual void Init() {
 				//render.MakeGeometry();
+
+				//render.LoadPritiveShader();
+				//actor.LoadIn();
+				//pbrView.LoadPBR();
+				//shadowView.CreateAndInitialize();
+				//round.CreateRectange();
+				//hibird.LoaderScene(screenWidth, screenHeight);
+				//deffered.LoaderScene(screenWidth, screenHeight);
+				//baseSdf.LoadSdfFile("resource/shader/sdf/wall.fs",screenWidth,screenHeight);
+				//model.LoadIn();
+				//gaussionBlur.LoadScene();
+				//boxBlur.LoadSceneAndTexture("resource/shader/blur/box_blur.fs", "resource/res/blur/senlin.png");
+				//bokehBlur.LoadSceneAndTexture("resource/res/blur/senlin.png", screenWidth,screenHeight);
+				//tiltBlur.LoadSceneAndTexture("resource/res/blur/senlin.png", screenWidth, screenHeight);
+				//irisBlur.LoadSceneAndTexture("resource/res/blur/senlin.png", screenWidth, screenHeight);
+				//grainyBlur.LoadSceneAndTexture("resource/res/blur/senlin.png", screenWidth, screenHeight);
+				//radialBlur.LoadSceneAndTexture("resource/res/blur/senlin.png", screenWidth, screenHeight);
+				//dirctionBlur.LoadSceneAndTexture("resource/res/blur/senlin.png", screenWidth, screenHeight);
+				//waterSm.LoadScene();
+				//sky.LoadScene();
+				//cubSky.LoadScene(screenWidth,screenHeight);
+				//water.LoadScene(screenWidth, screenHeight);
+				brdf.LoadScene(screenWidth,screenHeight);
+				SetTargetFPS(120);
 			}
 
 			
@@ -76,18 +124,41 @@ namespace Seek {
 					//shadowView.Tick();
 					//hibird.Tick();
 					//hibird.TextureModelRender();
-				//	deffered.Tick();
-					baseSdf.Tick();
+					//deffered.Tick();
+					//baseSdf.Tick();
+					//bokehBlur.Tick();
+					//tiltBlur.Tick();
+					//irisBlur.Tick();
+					//grainyBlur.Tick();
+					//radialBlur.Tick();
+					//dirctionBlur.Tick();
+					//waterSm.Tick();
+					//sky.Tick();
+					//cubSky.Tick();
+					//water.Tick();
 					BeginDrawing();
-					ClearBackground(RAYWHITE);
+					ClearBackground(BLACK);
 					//round.Draw(screenWidth, screenHeight);
 					//shadowView.Draw();
 					//actor.Shaow();
 					//pbrView.Draw();
 					//model.Shaow();
-				//	hibird.Render();
-				//	deffered.Render();
-					baseSdf.Draw();
+					//hibird.Render();
+					//deffered.Render();
+					//baseSdf.Draw();
+					//boxBlur.Render();
+					//kawasBlur.BlurDraw();
+					//bokehBlur.Render();
+					//tiltBlur.Render();
+				    //irisBlur.Render();
+				    //grainyBlur.Render();
+				    //radialBlur.Render();
+					//dirctionBlur.Render();
+					//waterSm.Render();
+					//sky.Render();
+					//cubSky.Render();
+					//water.Render();
+					brdf.Render();
 					DrawFPS(500, 300);
 					EndDrawing();
 				}    // Detect window close button or ESC key

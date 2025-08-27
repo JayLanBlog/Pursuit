@@ -49,6 +49,53 @@ namespace DRAW {
 			return texture;
 		}
 
+
+
+
+		Texture2D LoadCubeTexture(std::vector<Image> datas, int mipmapLevel) {
+			Texture2D texture = { 0 };
+
+			unsigned int id = 0;
+			glGenTextures(1, &id);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, id);
+			for (size_t i = 0; i < datas.size(); i++)
+			{
+				//	unsigned char* data = stbi_load(datas[i]., &width, &height, &nr_Channels, 0);
+				if (datas[i].data)
+				{
+					unsigned int glInternalFormat, glFormat, glType;
+					GetGlTextureFormats(datas[i].format, &glInternalFormat, &glFormat, &glType);
+					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, mipmapLevel, glFormat, datas[i].width, datas[i].height, 0, datas[i].format, glType, datas[i].data);
+				}
+				else
+				{
+					//LOG("ERROR: FAILED TO LOAD CUBEMAP TEXTURE FROM FILE");
+					TRACELOG(LOG_ERROR, "FAILED TO LOAD CUBEMAP TEXTURE FROM FILE");
+				}
+			}
+			// Set cubemap texture sampling parameters
+			if (mipmapLevel > 1) glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			else glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);  // Flag not supported on OpenGL ES 2.0
+			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+			if (id > 0) TRACELOG(LOG_INFO, "TEXTURE: [ID %i] Cubemap texture loaded successfully", id);
+			else TRACELOG(LOG_WARNING, "TEXTURE: Failed to load cubemap texture");
+
+			texture.id = id;
+		
+			texture.width = datas[0].width;
+			texture.height = datas[0].height;
+			texture.mipmaps = datas[0].mipmaps;
+			texture.format = datas[0].format;
+			return texture;
+		}
+
+
 		Texture2D LoadTexture(const char* fileName) {
 			Texture2D texture = { 0 };
 
@@ -205,6 +252,40 @@ namespace DRAW {
 			else TRACELOG(LOG_WARNING, "TEXTURE: [ID %i] Failed to update for current texture format (%i)", id, format);
 		}
 
+		unsigned int LoadTextureCubemap(std::vector<Image> datas, int mipmapLevel) {
+			unsigned int id = 0;
+			glGenTextures(1, &id);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, id);
+			for (size_t i = 0; i < datas.size(); i++)
+			{
+			//	unsigned char* data = stbi_load(datas[i]., &width, &height, &nr_Channels, 0);
+				if (datas[i].data)
+				{
+					unsigned int glInternalFormat, glFormat, glType;
+					GetGlTextureFormats(datas[i].format, &glInternalFormat, &glFormat, &glType);
+					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, mipmapLevel, glFormat, datas[i].width, datas[i].height, 0, datas[i].format, glType, datas[i].data);
+				}
+				else
+				{
+					//LOG("ERROR: FAILED TO LOAD CUBEMAP TEXTURE FROM FILE");
+					TRACELOG(LOG_ERROR,"FAILED TO LOAD CUBEMAP TEXTURE FROM FILE");
+				}	
+			}
+			// Set cubemap texture sampling parameters
+			if (mipmapLevel > 1) glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			else glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);  // Flag not supported on OpenGL ES 2.0
+			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+			if (id > 0) TRACELOG(LOG_INFO, "TEXTURE: [ID %i] Cubemap texture loaded successfully", id);
+			else TRACELOG(LOG_WARNING, "TEXTURE: Failed to load cubemap texture");
+			return id;
+		}
+
 
 		unsigned int LoadTextureCubemap(const void* data, int size, int format, int mipmapCount) {
 			unsigned int id = 0;
@@ -295,7 +376,7 @@ namespace DRAW {
 			return result;
 		}
 
-		static int GetPixelDataSize(int width, int height, int format) {
+		int GetPixelDataSize(int width, int height, int format) {
 			int dataSize = 0;       // Size in bytes
 			int bpp = 0;            // Bits per pixel
 
@@ -655,13 +736,12 @@ namespace DRAW {
 				{
 					DrawRenderBatch(PLGL.currentBatch);
 				}
-
 #endif
 			}
 			else
 			{
 #if defined(GRAPHICS_API_OPENGL_11)
-				rlEnableTexture(id);
+				EnableTexture(id);
 #else
 				if (PLGL.currentBatch->draws[PLGL.currentBatch->drawCounter - 1].textureId != id)
 				{
@@ -688,7 +768,6 @@ namespace DRAW {
 					PLGL.currentBatch->draws[PLGL.currentBatch->drawCounter - 1].textureId = id;
 					PLGL.currentBatch->draws[PLGL.currentBatch->drawCounter - 1].vertexCount = 0;
 				}
-
 #endif
 			}
 		}
@@ -774,6 +853,156 @@ namespace DRAW {
 			}
 
 			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		// Load color data from image as a Color array (RGBA - 32bit)
+// NOTE: Memory allocated should be freed using UnloadImageColors();
+		Color* LoadImageColors(Image image)
+		{
+			if ((image.width == 0) || (image.height == 0)) return NULL;
+
+			Color* pixels = (Color*)MALLOC(image.width * image.height * sizeof(Color));
+
+			if (image.format >= PIXELFORMAT_COMPRESSED_DXT1_RGB) TRACELOG(LOG_WARNING, "IMAGE: Pixel data retrieval not supported for compressed image formats");
+			else
+			{
+				if ((image.format == PIXELFORMAT_UNCOMPRESSED_R32) ||
+					(image.format == PIXELFORMAT_UNCOMPRESSED_R32G32B32) ||
+					(image.format == PIXELFORMAT_UNCOMPRESSED_R32G32B32A32)) TRACELOG(LOG_WARNING, "IMAGE: Pixel format converted from 32bit to 8bit per channel");
+
+				if ((image.format == PIXELFORMAT_UNCOMPRESSED_R16) ||
+					(image.format == PIXELFORMAT_UNCOMPRESSED_R16G16B16) ||
+					(image.format == PIXELFORMAT_UNCOMPRESSED_R16G16B16A16)) TRACELOG(LOG_WARNING, "IMAGE: Pixel format converted from 16bit to 8bit per channel");
+
+				for (int i = 0, k = 0; i < image.width * image.height; i++)
+				{
+					switch (image.format)
+					{
+					case PIXELFORMAT_UNCOMPRESSED_GRAYSCALE:
+					{
+						pixels[i].r = ((unsigned char*)image.data)[i];
+						pixels[i].g = ((unsigned char*)image.data)[i];
+						pixels[i].b = ((unsigned char*)image.data)[i];
+						pixels[i].a = 255;
+
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA:
+					{
+						pixels[i].r = ((unsigned char*)image.data)[k];
+						pixels[i].g = ((unsigned char*)image.data)[k];
+						pixels[i].b = ((unsigned char*)image.data)[k];
+						pixels[i].a = ((unsigned char*)image.data)[k + 1];
+
+						k += 2;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R5G5B5A1:
+					{
+						unsigned short pixel = ((unsigned short*)image.data)[i];
+
+						pixels[i].r = (unsigned char)((float)((pixel & 0b1111100000000000) >> 11) * (255 / 31));
+						pixels[i].g = (unsigned char)((float)((pixel & 0b0000011111000000) >> 6) * (255 / 31));
+						pixels[i].b = (unsigned char)((float)((pixel & 0b0000000000111110) >> 1) * (255 / 31));
+						pixels[i].a = (unsigned char)((pixel & 0b0000000000000001) * 255);
+
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R5G6B5:
+					{
+						unsigned short pixel = ((unsigned short*)image.data)[i];
+
+						pixels[i].r = (unsigned char)((float)((pixel & 0b1111100000000000) >> 11) * (255 / 31));
+						pixels[i].g = (unsigned char)((float)((pixel & 0b0000011111100000) >> 5) * (255 / 63));
+						pixels[i].b = (unsigned char)((float)(pixel & 0b0000000000011111) * (255 / 31));
+						pixels[i].a = 255;
+
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R4G4B4A4:
+					{
+						unsigned short pixel = ((unsigned short*)image.data)[i];
+
+						pixels[i].r = (unsigned char)((float)((pixel & 0b1111000000000000) >> 12) * (255 / 15));
+						pixels[i].g = (unsigned char)((float)((pixel & 0b0000111100000000) >> 8) * (255 / 15));
+						pixels[i].b = (unsigned char)((float)((pixel & 0b0000000011110000) >> 4) * (255 / 15));
+						pixels[i].a = (unsigned char)((float)(pixel & 0b0000000000001111) * (255 / 15));
+
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R8G8B8A8:
+					{
+						pixels[i].r = ((unsigned char*)image.data)[k];
+						pixels[i].g = ((unsigned char*)image.data)[k + 1];
+						pixels[i].b = ((unsigned char*)image.data)[k + 2];
+						pixels[i].a = ((unsigned char*)image.data)[k + 3];
+
+						k += 4;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R8G8B8:
+					{
+						pixels[i].r = (unsigned char)((unsigned char*)image.data)[k];
+						pixels[i].g = (unsigned char)((unsigned char*)image.data)[k + 1];
+						pixels[i].b = (unsigned char)((unsigned char*)image.data)[k + 2];
+						pixels[i].a = 255;
+
+						k += 3;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R32:
+					{
+						pixels[i].r = (unsigned char)(((float*)image.data)[k] * 255.0f);
+						pixels[i].g = 0;
+						pixels[i].b = 0;
+						pixels[i].a = 255;
+
+						k += 1;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R32G32B32:
+					{
+						pixels[i].r = (unsigned char)(((float*)image.data)[k] * 255.0f);
+						pixels[i].g = (unsigned char)(((float*)image.data)[k + 1] * 255.0f);
+						pixels[i].b = (unsigned char)(((float*)image.data)[k + 2] * 255.0f);
+						pixels[i].a = 255;
+
+						k += 3;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R32G32B32A32:
+					{
+						pixels[i].r = (unsigned char)(((float*)image.data)[k] * 255.0f);
+						pixels[i].g = (unsigned char)(((float*)image.data)[k + 1] * 255.0f);
+						pixels[i].b = (unsigned char)(((float*)image.data)[k + 2] * 255.0f);
+						pixels[i].a = (unsigned char)(((float*)image.data)[k + 3] * 255.0f);
+
+						k += 4;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R16:
+					{
+						pixels[i].r = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k]) * 255.0f);
+						pixels[i].g = 0;
+						pixels[i].b = 0;
+						pixels[i].a = 255;
+
+						k += 1;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R16G16B16:
+					{
+						pixels[i].r = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k]) * 255.0f);
+						pixels[i].g = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k + 1]) * 255.0f);
+						pixels[i].b = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k + 2]) * 255.0f);
+						pixels[i].a = 255;
+
+						k += 3;
+					} break;
+					case PIXELFORMAT_UNCOMPRESSED_R16G16B16A16:
+					{
+						pixels[i].r = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k]) * 255.0f);
+						pixels[i].g = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k + 1]) * 255.0f);
+						pixels[i].b = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k + 2]) * 255.0f);
+						pixels[i].a = (unsigned char)(HalfToFloat(((unsigned short*)image.data)[k + 3]) * 255.0f);
+
+						k += 4;
+					} break;
+					default: break;
+					}
+				}
+			}
+
+			return pixels;
 		}
 
 		// Set cubemap parameters (wrap mode/filter mode)

@@ -15,6 +15,59 @@ using namespace Text;
  int lightsCount = 0;
 namespace ModelView {
 
+	void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color color) {
+		PushMatrix();
+		Translatef(centerPos.x, centerPos.y, centerPos.z);
+		Scalef(radius, radius, radius);
+		Begin(PL_TRIANGLES);
+		Color4ub(color.r, color.g, color.b, color.a);
+		float ringangle = DEG2RAD * (180.0f / (rings + 1)); // Angle between latitudinal parallels
+		float sliceangle = DEG2RAD * (360.0f / slices); // Angle between longitudinal meridians
+
+		float cosring = cosf(ringangle);
+		float sinring = sinf(ringangle);
+		float cosslice = cosf(sliceangle);
+		float sinslice = sinf(sliceangle);
+
+		Vector3 vertices[4] = { 0 }; // Required to store face vertices
+		vertices[2] = { 0, 1, 0 };
+		vertices[3] = { sinring, cosring, 0 };
+
+		for (int i = 0; i < rings + 1; i++)
+		{
+			for (int j = 0; j < slices; j++)
+			{
+				vertices[0] = vertices[2]; // Rotate around y axis to set up vertices for next face
+				vertices[1] = vertices[3];
+				vertices[2] = { cosslice * vertices[2].x - sinslice * vertices[2].z, vertices[2].y, sinslice * vertices[2].x + cosslice * vertices[2].z }; // Rotation matrix around y axis
+				vertices[3] = { cosslice * vertices[3].x - sinslice * vertices[3].z, vertices[3].y, sinslice * vertices[3].x + cosslice * vertices[3].z };
+
+				Normal3f(vertices[0].x, vertices[0].y, vertices[0].z);
+				Vertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
+				Normal3f(vertices[3].x, vertices[3].y, vertices[3].z);
+				Vertex3f(vertices[3].x, vertices[3].y, vertices[3].z);
+				Normal3f(vertices[1].x, vertices[1].y, vertices[1].z);
+				Vertex3f(vertices[1].x, vertices[1].y, vertices[1].z);
+
+				Normal3f(vertices[0].x, vertices[0].y, vertices[0].z);
+				Vertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
+				Normal3f(vertices[2].x, vertices[2].y, vertices[2].z);
+				Vertex3f(vertices[2].x, vertices[2].y, vertices[2].z);
+				Normal3f(vertices[3].x, vertices[3].y, vertices[3].z);
+				Vertex3f(vertices[3].x, vertices[3].y, vertices[3].z);
+			}
+
+			vertices[2] = vertices[3]; // Rotate around z axis to set up  starting vertices for next ring
+			vertices[3] = { cosring * vertices[3].x + sinring * vertices[3].y, -sinring * vertices[3].x + cosring * vertices[3].y, vertices[3].z }; // Rotation matrix around z axis
+		}
+		End();
+		PopMatrix();
+	}
+
+	void DrawSphere(Vector3 centerPos, float radius, Color color) {
+		DrawSphereEx(centerPos, radius, 64, 64, color);
+	}
+
 	// Create a light and get shader locations
 	MLight CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader) {
 		MLight light = { 0 };
@@ -316,6 +369,58 @@ namespace ModelView {
 		DrawCubeWires(position, size.x, size.y, size.z, color);
 	}
 
+	Mesh GenSkyMeshCube(float width, float height, float length) {
+		Mesh mesh = { 0 };
+
+		float skyboxVertices[] = {
+			// positions          
+			-width,  1.0f, -1.0f,
+			-width, -1.0f, -1.0f,
+			 width, -1.0f, -1.0f,
+			 width, -1.0f, -1.0f,
+			 width,  1.0f, -1.0f,
+			-width,  1.0f, -1.0f,
+
+			-width, -1.0f,  1.0f,
+			-width, -1.0f, -1.0f,
+			-width,  1.0f, -1.0f,
+			-width,  1.0f, -1.0f,
+			-width,  1.0f,  1.0f,
+			-width, -1.0f,  1.0f,
+
+			 width, -1.0f, -1.0f,
+			 width, -1.0f,  1.0f,
+			 width,  1.0f,  1.0f,
+			 width,  1.0f,  1.0f,
+			 width,  1.0f, -1.0f,
+			 width, -1.0f, -1.0f,
+
+			-width, -1.0f,  1.0f,
+			-width,  1.0f,  1.0f,
+			 width,  1.0f,  1.0f,
+			 width,  1.0f,  1.0f,
+			 width, -1.0f,  1.0f,
+			-width, -1.0f,  1.0f,
+
+			-width,  1.0f, -1.0f,
+			 width,  1.0f, -1.0f,
+			 width,  1.0f,  1.0f,
+			 width,  1.0f,  1.0f,
+			-width,  1.0f,  1.0f,
+			-width,  1.0f, -1.0f,
+
+			-width, -1.0f, -1.0f,
+			-width, -1.0f,  1.0f,
+			 width, -1.0f, -1.0f,
+			 width, -1.0f, -1.0f,
+			-width, -1.0f,  1.0f,
+			 width, -1.0f,  1.0f
+		};
+
+
+		return mesh;
+	}
+
 	// Generated cuboid mesh
 	Mesh GenMeshCube(float width, float height, float length) {
 		Mesh mesh = { 0 };
@@ -496,57 +601,7 @@ namespace ModelView {
 				PopMatrix();
 	}
 
-	// Draw sphere with extended parameters
-	void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color color) {
 
-		PushMatrix();
-		// NOTE: Transformation is applied in inverse order (scale -> translate)
-		Translatef(centerPos.x, centerPos.y, centerPos.z);
-		Scalef(radius, radius, radius);
-		Begin(PL_TRIANGLES);
-		Color4ub(color.r, color.g, color.b, color.a);
-
-		float ringangle = DEG2RAD * (180.0f / (rings + 1)); // Angle between latitudinal parallels
-		float sliceangle = DEG2RAD * (360.0f / slices); // Angle between longitudinal meridians
-
-		float cosring = cosf(ringangle);
-		float sinring = sinf(ringangle);
-		float cosslice = cosf(sliceangle);
-		float sinslice = sinf(sliceangle);
-
-		Vector3 vertices[4] = { 0 }; // Required to store face vertices
-		vertices[2] = { 0, 1, 0 };
-		vertices[3] = { sinring, cosring, 0 };
-		for (int i = 0; i < rings + 1; i++)
-		{
-			for (int j = 0; j < slices; j++)
-			{
-				vertices[0] = vertices[2]; // Rotate around y axis to set up vertices for next face
-				vertices[1] = vertices[3];
-				vertices[2] = { cosslice * vertices[2].x - sinslice * vertices[2].z, vertices[2].y, sinslice * vertices[2].x + cosslice * vertices[2].z }; // Rotation matrix around y axis
-				vertices[3] =  { cosslice * vertices[3].x - sinslice * vertices[3].z, vertices[3].y, sinslice * vertices[3].x + cosslice * vertices[3].z };
-
-				Normal3f(vertices[0].x, vertices[0].y, vertices[0].z);
-				Vertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
-				Normal3f(vertices[3].x, vertices[3].y, vertices[3].z);
-				Vertex3f(vertices[3].x, vertices[3].y, vertices[3].z);
-				Normal3f(vertices[1].x, vertices[1].y, vertices[1].z);
-				Vertex3f(vertices[1].x, vertices[1].y, vertices[1].z);
-
-				Normal3f(vertices[0].x, vertices[0].y, vertices[0].z);
-				Vertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
-				Normal3f(vertices[2].x, vertices[2].y, vertices[2].z);
-				Vertex3f(vertices[2].x, vertices[2].y, vertices[2].z);
-				Normal3f(vertices[3].x, vertices[3].y, vertices[3].z);
-				Vertex3f(vertices[3].x, vertices[3].y, vertices[3].z);
-			}
-
-			vertices[2] = vertices[3]; // Rotate around z axis to set up  starting vertices for next ring
-			vertices[3] = { cosring * vertices[3].x + sinring * vertices[3].y, -sinring * vertices[3].x + cosring * vertices[3].y, vertices[3].z }; // Rotation matrix around z axis
-		}
-		End();
-		PopMatrix();
-	}
 
 	// Update model animated bones transform matrices for a given frame
 // NOTE: Updated data is not uploaded to GPU but kept at model.meshes[i].boneMatrices[boneId],
@@ -780,7 +835,10 @@ namespace ModelView {
 				// Enable texture for active slot
 				if ((i == MATERIAL_MAP_IRRADIANCE) ||
 					(i == MATERIAL_MAP_PREFILTER) ||
-					(i == MATERIAL_MAP_CUBEMAP)) EnableTextureCubemap(material.maps[i].texture.id);
+					(i == MATERIAL_MAP_CUBEMAP))
+				{
+					EnableTextureCubemap(material.maps[i].texture.id);
+				}
 				else EnableTexture(material.maps[i].texture.id);
 
 				SetUniform(material.shader.locs[SHADER_LOC_MAP_DIFFUSE + i], &i, SHADER_UNIFORM_INT, 1);

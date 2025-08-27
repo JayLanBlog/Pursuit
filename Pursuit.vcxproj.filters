@@ -280,6 +280,27 @@
     <Filter Include="seek\drawable\sdf">
       <UniqueIdentifier>{cd9413ab-c5de-4258-b4cd-5a5f10ba45bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="seek\drawable\blur">
+      <UniqueIdentifier>{f16298fd-b5bd-429e-b156-ea98ebb2cc63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\gems">
+      <UniqueIdentifier>{1bfad500-bad1-414c-970d-a35832a63b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\gems\version1">
+      <UniqueIdentifier>{b724d955-9417-4ef0-81b4-b65412755d3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\gems\version2">
+      <UniqueIdentifier>{01c9c14d-e972-472f-92c2-f9d8db742772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\gems\version1\water">
+      <UniqueIdentifier>{80ce68f0-d42d-41de-8b5a-277054ca6e69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\gems\version1\surace">
+      <UniqueIdentifier>{311f52b0-257e-4d1b-8bd1-baa8c4ef6836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\brdf">
+      <UniqueIdentifier>{dfcb8a6e-20db-41ed-adfd-df77306b07db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\glad\glad.h">
@@ -551,6 +572,48 @@
     </ClInclude>
     <ClInclude Include="seek\drawable\sdf\sdf_base.h">
       <Filter>seek\drawable\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\gaussion_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\box_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\kawase_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\bokeh_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\tiltshift_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\iris_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\grainy_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\radial_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\blur\directional_blur.h">
+      <Filter>seek\drawable\blur</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\gems\version1\water_smulate.h">
+      <Filter>seek\drawable\gems\version1</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\gems\version1\water\water.h">
+      <Filter>seek\drawable\gems\version1\water</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\cube_sky.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\sky_sample.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\brdf\brdf_light.h">
+      <Filter>seek\drawable\brdf</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

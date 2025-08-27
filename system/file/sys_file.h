@@ -43,6 +43,8 @@ namespace System {
 	const char* GetDirectoryPath(const char* filePath);
 
 	const char* GetWorkingDirectory(void);
+
+	bool FileExists(const char* fileName);
 }
 
 #endif // !SYS_FILE

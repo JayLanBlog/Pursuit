@@ -3,6 +3,12 @@ using namespace Seek;
 #include <stb_image.h>
 #include <logger/logger.h>
 #include <section/enum/material_em.h>
+#include <rmd/gl/gl_texture.h>
+#include <stb_image.h>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb_image_write.h>
+
+using namespace DRAW::GL;
 namespace System {
 	void UnloadImage(Image image) {
 		FREE(image.data);
@@ -286,7 +292,7 @@ namespace System {
             int dataSize = 0;
             unsigned char* fileData = stbi_write_png_to_mem((const unsigned char*)imgData, image.width * channels, image.width, image.height, channels, &dataSize);
             result = SaveFileData(fileName, fileData, dataSize);
-            RL_FREE(fileData);
+            FREE(fileData);
         }
 #else
         if (false) {}
@@ -334,7 +340,7 @@ namespace System {
             result = SaveFileData(fileName, image.data, GetPixelDataSize(image.width, image.height, image.format));
         }
 
-        if (allocatedData) RL_FREE(imgData);
+        if (allocatedData) FREE(imgData);
 #endif      // SUPPORT_IMAGE_EXPORT
 
         if (result != 0) TRACELOG(LOG_INFO, "FILEIO: [%s] Image exported successfully", fileName);

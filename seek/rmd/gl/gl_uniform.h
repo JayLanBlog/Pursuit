@@ -13,6 +13,8 @@ namespace DRAW {
 		
 		void SetUniformMatrix(int locIndex, Matrix mat);
 
+		void SetUniformMatrix3(int locIndex, Matrix3 mat);
+
 		void SetUniformMatrices(int locIndex, const Matrix* matrices, int count);
 
 		int GetLocationAttrib(unsigned int shaderId, const char* attribName);

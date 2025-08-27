@@ -9,11 +9,23 @@
 #include <core/text/draw_text.h>
 #include <section/martrix/cg_def.h>
 #include <core/text/draw_shape.h>
+#define MSF_GIF_IMPL
+#include "msf_gif.h"
+
 using namespace System;
 using namespace Seek;
 using namespace DRAW::GL;
 CoreData CORE = { 0 };
 extern bool isGpuReady = false;
+#if defined(SUPPORT_SCREEN_CAPTURE)
+int screenshotCounter = 0;           // Screenshots counter
+#endif
+
+#if defined(SUPPORT_GIF_RECORDING)
+unsigned int gifFrameCounter = 0;    // GIF frames counter
+bool gifRecording = false;           // GIF recording state
+extern MsfGifState gifState = { 0 };        // MSGIF context state
+#endif
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -90,7 +102,6 @@ void InitWindow(int width, int height, const char* title) {
     // NOTE: CORE.Window.currentFbo.width and CORE.Window.currentFbo.height not used, just stored as globals in PLGL
     plglInit(CORE.Window.currentFbo.width, CORE.Window.currentFbo.height);
     isGpuReady = true; // Flag to note GPU has been initialized successfully
-
 
     // Setup default viewport
     SetupViewport(CORE.Window.currentFbo.width, CORE.Window.currentFbo.height);
@@ -305,6 +316,8 @@ bool IsCursorOnScreen(void)
 #include <windows.h>
 #endif
 #include <section/enum/camera_em.h>
+#include <file/sys_text.h>
+using namespace Text;
 void WaitTime(double seconds)
 {
     if (seconds < 0) return;    // Security check
@@ -586,8 +599,33 @@ Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int heigh
     Vector2 screenPosition = { (ndcPos.x + 1.0f) / 2.0f * (float)width, (ndcPos.y + 1.0f) / 2.0f * (float)height };
 
     return screenPosition;
+}
 
 
+
+void TakeScreenshot(const char* fileName) {
+#if defined(SUPPORT_MODULE_RTEXTURES)
+    // Security check to (partially) avoid malicious code
+    if (strchr(fileName, '\'') != NULL) { TRACELOG(LOG_WARNING, "SYSTEM: Provided fileName could be potentially malicious, avoid [\'] character"); return; }
+
+    // Apply a scale if we are doing HIGHDPI auto-scaling
+    Vector2 scale = { 1.0f, 1.0f };
+    if (IsWindowState(FLAG_WINDOW_HIGHDPI)) scale = GetWindowScaleDPI();
+
+    unsigned char* imgData = ReadScreenPixels((int)((float)CORE.Window.render.width * scale.x), (int)((float)CORE.Window.render.height * scale.y));
+    Image image = { imgData, (int)((float)CORE.Window.render.width * scale.x), (int)((float)CORE.Window.render.height * scale.y), 1, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 };
+
+    char path[512] = { 0 };
+    strcpy(path, TextFormat("%s/%s", CORE.Storage.basePath, fileName));
+
+    ExportImage(image, path);           // WARNING: Module required: rtextures
+    FREE(imgData);
+
+    if (FileExists(path)) TRACELOG(LOG_INFO, "SYSTEM: [%s] Screenshot taken successfully", path);
+    else TRACELOG(LOG_WARNING, "SYSTEM: [%s] Screenshot could not be saved", path);
+#else
+    TRACELOG(LOG_WARNING, "IMAGE: ExportImage() requires module: rtextures");
+#endif
 }
 
 Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera) {

@@ -25,6 +25,7 @@ namespace DRAW {
 		void SetShaderValueV(Shader shader, int locIndex, const void* value, int uniformType, int count);
 		// Set shader uniform value (matrix 4x4)
 		void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);
+		void SetShaderValueMatrix3(Shader shader, int locIndex, Matrix3 mat);
 		// Set shader uniform value for texture
 		void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture);
 		// Enable shader program

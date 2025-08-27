@@ -34,3 +34,6 @@ void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSiz
 // Draw a part of a texture (defined by a rectangle) with 'pro' parameters
 // NOTE: origin is relative to destination rectangle size
 void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);
+
+
+void DrawTextureToFrameBuffer(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);

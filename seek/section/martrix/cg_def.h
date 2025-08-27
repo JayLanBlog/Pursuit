@@ -33,6 +33,12 @@ namespace Seek {
 		float m3, m7, m11, m15; // Matrix fourth row (4 components)
 	} Matrix;
 
+	typedef struct Matrix3 {
+		float m0, m4, m8;  // Matrix first row (4 components)
+		float m1, m5, m9;  // Matrix second row (4 components)
+		float m2, m6, m10; // Matrix third row (4 components)
+	} Matrix3;
+
 	// Rectangle, 4 components
 	typedef struct Rectangle {
 		float x;                // Rectangle top-left corner position x

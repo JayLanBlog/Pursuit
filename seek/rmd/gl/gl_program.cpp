@@ -181,6 +181,15 @@ namespace DRAW {
 			}
 		}
 
+		void SetShaderValueMatrix3(Shader shader, int locIndex, Matrix3 mat) {
+			if (locIndex > -1)
+			{
+				EnableShader(shader.id);
+				SetUniformMatrix3(locIndex, mat);
+				DisableShader();
+			}
+		}
+
 		// Set shader uniform value (matrix 4x4)
 		void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat) {
 			if (locIndex > -1)

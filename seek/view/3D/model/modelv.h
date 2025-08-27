@@ -17,6 +17,8 @@ namespace ModelView {
 	// Generated cuboid mesh
 	Mesh GenMeshCube(float width, float height, float length);
 
+	Mesh GenSkyMeshCube(float width, float height, float length);
+	
 	// Load model from generated mesh
 // WARNING: A shallow copy of mesh is generated, passed by value,
 // as long as struct contains pointers to data and some values, we get a copy
@@ -67,4 +69,8 @@ namespace ModelView {
 
 	// NOTE: Light shader locations should be available 
 	void UpdateLightValues(Shader shader, MLight light);
+
+	void DrawSphere(Vector3 centerPos, float radius, Color color);
+
+	void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color color);
 }

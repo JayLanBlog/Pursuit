@@ -16,7 +16,7 @@ using namespace std;
 
 #define EXIT_FAILURE	1
 
-//#define SUPPORT_CONSOLE_TRACELOG
+#define SUPPORT_CONSOLE_TRACELOG
 
 #pragma warning(disable:4996)
 
@@ -26,6 +26,8 @@ using namespace std;
 #else
 #define CLITERAL(type)      (type)
 #endif
+
+#define SUPPORT_FILEFORMAT_JPG
 
 #define SUPPORT_FILEFORMAT_PNG
 
@@ -97,7 +99,7 @@ using namespace std;
 // Default font is loaded on window initialization to be available for the user to render simple text
 // NOTE: If enabled, uses external module functions to load default raylib font
 #define SUPPORT_DEFAULT_FONT            1
-//#define SUPPORT_IMGUI
+#define SUPPORT_IMGUI
 
 #define SUPPORT_MODULE_RTEXT 1
 
@@ -111,3 +113,10 @@ using namespace std;
 #define SUPPORT_QUADS_DRAW_MODE         1
 
 #define RLGL_RENDER_TEXTURES_HINT
+
+
+#define SUPPORT_SCREEN_CAPTURE
+#define SUPPORT_GIF_RECORDING
+
+#define SUPPORT_MODULE_RTEXTURES
+#define SUPPORT_IMAGE_EXPORT

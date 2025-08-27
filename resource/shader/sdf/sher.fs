@@ -163,4 +163,5 @@ void main( ) {
 
     // Visualize with a fun color map	
 	finalColor.rgb = pow(v, 0.35) * 1.3 * normalize(vec3(0.5, gl_FragCoord.xy / u_resolution.xy)) + vec3(v * 0.25);
+	finalColor.a  = 1.0;
 }

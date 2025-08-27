@@ -7,9 +7,88 @@
 #include <core/gui/draw_ui.h>
 #include <section/enum/camera_em.h>
 #include <core/text/draw_text.h>
+#include <file/sys_text.h>
 using namespace PiplineState;
 using namespace PMath;
 using namespace DRAW::GL;
+using namespace Text;
+using namespace System;
+// Load and draw a cube in NDC
+void LoadDrawCube(void) {
+#if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)
+    unsigned int cubeVAO = 0;
+    unsigned int cubeVBO = 0;
+
+    float vertices[] = {
+        // Positions          Normals               Texcoords
+       -1.0f, -1.0f, -1.0f,   0.0f,  0.0f, -1.0f,   0.0f, 0.0f,
+        1.0f,  1.0f, -1.0f,   0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
+        1.0f, -1.0f, -1.0f,   0.0f,  0.0f, -1.0f,   1.0f, 0.0f,
+        1.0f,  1.0f, -1.0f,   0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
+       -1.0f, -1.0f, -1.0f,   0.0f,  0.0f, -1.0f,   0.0f, 0.0f,
+       -1.0f,  1.0f, -1.0f,   0.0f,  0.0f, -1.0f,   0.0f, 1.0f,
+       -1.0f, -1.0f,  1.0f,   0.0f,  0.0f,  1.0f,   0.0f, 0.0f,
+        1.0f, -1.0f,  1.0f,   0.0f,  0.0f,  1.0f,   1.0f, 0.0f,
+        1.0f,  1.0f,  1.0f,   0.0f,  0.0f,  1.0f,   1.0f, 1.0f,
+        1.0f,  1.0f,  1.0f,   0.0f,  0.0f,  1.0f,   1.0f, 1.0f,
+       -1.0f,  1.0f,  1.0f,   0.0f,  0.0f,  1.0f,   0.0f, 1.0f,
+       -1.0f, -1.0f,  1.0f,   0.0f,  0.0f,  1.0f,   0.0f, 0.0f,
+       -1.0f,  1.0f,  1.0f,  -1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+       -1.0f,  1.0f, -1.0f,  -1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
+       -1.0f, -1.0f, -1.0f,  -1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+       -1.0f, -1.0f, -1.0f,  -1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+       -1.0f, -1.0f,  1.0f,  -1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
+       -1.0f,  1.0f,  1.0f,  -1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+        1.0f,  1.0f,  1.0f,   1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+        1.0f, -1.0f, -1.0f,   1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+        1.0f,  1.0f, -1.0f,   1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
+        1.0f, -1.0f, -1.0f,   1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+        1.0f,  1.0f,  1.0f,   1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+        1.0f, -1.0f,  1.0f,   1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
+       -1.0f, -1.0f, -1.0f,   0.0f, -1.0f,  0.0f,   0.0f, 1.0f,
+        1.0f, -1.0f, -1.0f,   0.0f, -1.0f,  0.0f,   1.0f, 1.0f,
+        1.0f, -1.0f,  1.0f,   0.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+        1.0f, -1.0f,  1.0f,   0.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+       -1.0f, -1.0f,  1.0f,   0.0f, -1.0f,  0.0f,   0.0f, 0.0f,
+       -1.0f, -1.0f, -1.0f,   0.0f, -1.0f,  0.0f,   0.0f, 1.0f,
+       -1.0f,  1.0f, -1.0f,   0.0f,  1.0f,  0.0f,   0.0f, 1.0f,
+        1.0f,  1.0f,  1.0f,   0.0f,  1.0f,  0.0f,   1.0f, 0.0f,
+        1.0f,  1.0f, -1.0f,   0.0f,  1.0f,  0.0f,   1.0f, 1.0f,
+        1.0f,  1.0f,  1.0f,   0.0f,  1.0f,  0.0f,   1.0f, 0.0f,
+       -1.0f,  1.0f, -1.0f,   0.0f,  1.0f,  0.0f,   0.0f, 1.0f,
+       -1.0f,  1.0f,  1.0f,   0.0f,  1.0f,  0.0f,   0.0f, 0.0f
+    };
+
+    // Gen VAO to contain VBO
+    glGenVertexArrays(1, &cubeVAO);
+    glBindVertexArray(cubeVAO);
+
+    // Gen and fill vertex buffer (VBO)
+    glGenBuffers(1, &cubeVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    // Bind vertex attributes (position, normals, texcoords)
+    glBindVertexArray(cubeVAO);
+    glEnableVertexAttribArray(PL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION);
+    glVertexAttribPointer(PL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // Positions
+    glEnableVertexAttribArray(PL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL);
+    glVertexAttribPointer(PL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float))); // Normals
+    glEnableVertexAttribArray(PL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD);
+    glVertexAttribPointer(PL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float))); // Texcoords
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    // Draw cube
+    glBindVertexArray(cubeVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+
+    // Delete VBO and VAO
+    glDeleteBuffers(1, &cubeVBO);
+    glDeleteVertexArrays(1, &cubeVAO);
+#endif
+}
 
 void EndTextureMode(void) {
 
@@ -72,6 +151,10 @@ void ClearBackground(Color color) {
     ClearScreenBuffers();
 }
 
+
+#include <logger/logger.h>
+#include <core/text/draw_shape.h>
+
 // End canvas drawing and swap buffers (double buffering)
 void EndDrawing(void) {
     DrawRenderBatchActive();      // Update and draw internal render batch
@@ -90,7 +173,7 @@ void EndDrawing(void) {
             // Get image data for the current frame (from backbuffer)
             // NOTE: This process is quite slow... :(
             Vector2 scale = GetWindowScaleDPI();
-            unsigned char* screenData = rlReadScreenPixels((int)((float)CORE.Window.render.width * scale.x), (int)((float)CORE.Window.render.height * scale.y));
+            unsigned char* screenData = ReadScreenPixels((int)((float)CORE.Window.render.width * scale.x), (int)((float)CORE.Window.render.height * scale.y));
 
 #ifndef GIF_RECORD_BITRATE
 #define GIF_RECORD_BITRATE 16
@@ -100,7 +183,7 @@ void EndDrawing(void) {
             msf_gif_frame(&gifState, screenData, gifFrameCounter / 10, GIF_RECORD_BITRATE, (int)((float)CORE.Window.render.width * scale.x) * 4);
             gifFrameCounter -= 1000 / GIF_RECORD_FRAMERATE;
 
-            RL_FREE(screenData);    // Free image data
+            FREE(screenData);    // Free image data
         }
 
 #if defined(SUPPORT_MODULE_RSHAPES) && defined(SUPPORT_MODULE_RTEXT)
@@ -112,7 +195,7 @@ void EndDrawing(void) {
         }
 #endif
 
-        rlDrawRenderBatchActive();  // Update and draw internal render batch
+        DrawRenderBatchActive();  // Update and draw internal render batch
     }
 #endif
 
@@ -184,8 +267,8 @@ void EndDrawing(void) {
         else
 #endif  // SUPPORT_GIF_RECORDING
         {
-            TakeScreenshot(TextFormat("screenshot%03i.png", screenshotCounter));
-            screenshotCounter++;
+             TakeScreenshot(TextFormat("screenshot%03i.png", screenshotCounter));
+             screenshotCounter++;
         }
     }
 #endif  // SUPPORT_SCREEN_CAPTURE
@@ -257,7 +340,6 @@ void Begin(int mode) {
         }
 
         if (PLGL.currentBatch->drawCounter >= PL_DEFAULT_BATCH_DRAWCALLS) DrawRenderBatch(PLGL.currentBatch);
-
         PLGL.currentBatch->draws[PLGL.currentBatch->drawCounter - 1].mode = mode;
         PLGL.currentBatch->draws[PLGL.currentBatch->drawCounter - 1].vertexCount = 0;
         PLGL.currentBatch->draws[PLGL.currentBatch->drawCounter - 1].textureId = PLGL.State.defaultTextureId;
@@ -293,4 +375,27 @@ void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color
     Vector2 origin = { 0.0f, 0.0f };
 
     DrawTexturePro(texture, source, dest, origin, 0.0f, tint);
+}
+
+// Draw a texture
+void DrawTexture(Texture2D texture, int posX, int posY, Color tint) {
+
+    DrawTextureEx(texture, { (float)posX, (float)posY }, 0.0f, 1.0f, tint);
+}
+
+void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint) {
+    Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
+    Rectangle dest = { position.x, position.y, (float)texture.width * scale, (float)texture.height * scale };
+    Vector2 origin = { 0.0f, 0.0f };
+
+    DrawTexturePro(texture, source, dest, origin, rotation, tint);
+}
+
+
+void DrawTextureFx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint) {
+    Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
+    Rectangle dest = { position.x, position.y, (float)texture.width * scale, (float)texture.height * scale };
+    Vector2 origin = { 0.0f, 0.0f };
+
+   DrawTextureToFrameBuffer(texture, source, dest, origin, rotation, tint);
 }

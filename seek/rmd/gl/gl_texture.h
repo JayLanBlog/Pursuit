@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <file/image.h>
+#include <section/martrix/cg_def.h>
 
 // Texture parameters (equivalent to OpenGL defines)
 #define PL_TEXTURE_WRAP_S                       0x2802      // GL_TEXTURE_WRAP_S
@@ -31,7 +32,7 @@ using namespace Seek;
 namespace DRAW {
 
 	namespace GL {
-
+		
 
 		// Get color normalized as float [0..1]
 		Vector4 ColorNormalize(Color color);
@@ -42,6 +43,8 @@ namespace DRAW {
 		Texture2D LoadTextureFromImage(Image image);
 
 		Texture2D LoadTexture(const char* fileName);
+
+		Texture2D LoadCubeTexture(std::vector<Image> datas, int mipmapLevel);
 
 		void UnloadTexture(unsigned int id);
 		// Generate mipmap data for selected texture
@@ -56,13 +59,15 @@ namespace DRAW {
 
 		void UpdateTexture(unsigned int id, int offsetX, int offsetY, int width, int height, int format, const void* data);
 
+		unsigned int LoadTextureCubemap(std::vector<Image> datas, int mipmapLevel);
+
 		unsigned int LoadTextureCubemap(const void* data, int size, int format, int mipmapCount);
 		// Create an image from another image piece
 		Image ImageFromImage(Image image, Rectangle rec);
 		//void rlLoadExtensions(void* loader);
 		void GetGlTextureFormats(int format, unsigned int* glInternalFormat, unsigned int* glFormat, unsigned int* glType);
 
-		static int GetPixelDataSize(int width, int height, int format);
+		int GetPixelDataSize(int width, int height, int format);
 
 		unsigned int LoadTexture(const void* data, int width, int height, int format, int mipmapCount);
 
@@ -108,6 +113,9 @@ namespace DRAW {
 
 		// Set cubemap parameters (wrap mode/filter mode)
 		void CubemapParameters(unsigned int id, int param, int value);
+
+
+		Color* LoadImageColors(Image image);
 	}
 
 }
