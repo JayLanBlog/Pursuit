@@ -149,6 +149,9 @@
     <ClCompile Include="seek\core\text\draw_shape.cpp">
       <Filter>seek\core\text</Filter>
     </ClCompile>
+    <ClCompile Include="seek\gemo\TorusKnotGeometry.cpp">
+      <Filter>seek\gemo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -300,6 +303,18 @@
     </Filter>
     <Filter Include="seek\drawable\brdf">
       <UniqueIdentifier>{dfcb8a6e-20db-41ed-adfd-df77306b07db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\drawable\gems\version1\grass">
+      <UniqueIdentifier>{7a5f6afa-ee40-4bef-881e-fc6e2d4ae114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\gemo">
+      <UniqueIdentifier>{5e786c5b-115a-4fc7-9e3c-eba544529650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\samples">
+      <UniqueIdentifier>{0356ffc2-6e01-4492-b901-d7eae9f0a640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\samples\scene">
+      <UniqueIdentifier>{09aef8b7-a33e-42a1-af2a-38d7815140d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -614,6 +629,24 @@
     </ClInclude>
     <ClInclude Include="seek\drawable\brdf\brdf_light.h">
       <Filter>seek\drawable\brdf</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\brdf\ao_sample.h">
+      <Filter>seek\drawable\brdf</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\gems\version1\grass\grass.h">
+      <Filter>seek\drawable\gems\version1\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\sky_box.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\gemo\TorusKnotGeometry.h">
+      <Filter>seek\gemo</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\benchmark\custom_model.h">
+      <Filter>seek\drawable\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\scene\disolve_scenes.h">
+      <Filter>seek\samples\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

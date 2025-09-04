@@ -32,7 +32,8 @@ using namespace Seek;
 namespace DRAW {
 
 	namespace GL {
-		
+		// Generate image: checked
+		Image GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2);
 
 		// Get color normalized as float [0..1]
 		Vector4 ColorNormalize(Color color);

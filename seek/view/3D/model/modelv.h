@@ -25,6 +25,7 @@ namespace ModelView {
 // of mesh pointing to same data as original version... be careful!
 	Model LoadModelFromMesh(Mesh mesh);
 
+
 	// Draw a model (with texture if set)
 	void DrawModel(Model model, Vector3 position, float scale, Color tint);
 

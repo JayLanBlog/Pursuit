@@ -8,6 +8,31 @@ using namespace System;
 namespace DRAW {
 	namespace GL {
 
+		
+		Image GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2) {
+
+			Color* pixels = (Color*)MALLOC(width * height * sizeof(Color));
+
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					if ((x / checksX + y / checksY) % 2 == 0) pixels[y * width + x] = col1;
+					else pixels[y * width + x] = col2;
+				}
+			}
+
+			Image image = {
+				 pixels,
+				 width,
+				 height,
+				 PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
+				1
+			};
+
+			return image;
+		}
+
 		// Get color with alpha applied, alpha goes from 0.0f to 1.0f
 		Color ColorAlpha(Color color, float alpha) {
 			Color result = color;

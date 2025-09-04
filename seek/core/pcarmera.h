@@ -4,7 +4,7 @@ using namespace Seek;
 
 
 #define PL_CULL_DISTANCE_NEAR              0.001      // Default projection matrix near cull distance
-#define PL_CULL_DISTANCE_FAR             10000.0      // Default projection matrix far cull distance
+#define PL_CULL_DISTANCE_FAR             1000.0      // Default projection matrix far cull distance
 
 
 //----------------------------------------------------------------------------------

@@ -173,6 +173,7 @@
     <ClCompile Include="seek\core\text\draw_shape.cpp" />
     <ClCompile Include="seek\core\text\draw_text.cpp" />
     <ClCompile Include="seek\device\pursuit_gl.cpp" />
+    <ClCompile Include="seek\gemo\TorusKnotGeometry.cpp" />
     <ClCompile Include="seek\menu\console.cpp" />
     <ClCompile Include="seek\menu\control_panel.cpp" />
     <ClCompile Include="seek\rmd\gl\gl_batch.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="seek\device\pursuit_device.h" />
     <ClInclude Include="seek\device\pursuit_gl.h" />
     <ClInclude Include="seek\drawable\benchmark\cube_sky.h" />
+    <ClInclude Include="seek\drawable\benchmark\custom_model.h" />
     <ClInclude Include="seek\drawable\benchmark\derferender_view.h" />
     <ClInclude Include="seek\drawable\benchmark\gltf_view.h" />
     <ClInclude Include="seek\drawable\benchmark\model_viewer.h" />
@@ -237,6 +239,7 @@
     <ClInclude Include="seek\drawable\benchmark\rectangle_view.h" />
     <ClInclude Include="seek\drawable\benchmark\shader_draw.h" />
     <ClInclude Include="seek\drawable\benchmark\shadow_view.h" />
+    <ClInclude Include="seek\drawable\benchmark\sky_box.h" />
     <ClInclude Include="seek\drawable\benchmark\sky_sample.h" />
     <ClInclude Include="seek\drawable\blur\bokeh_blur.h" />
     <ClInclude Include="seek\drawable\blur\box_blur.h" />
@@ -247,11 +250,14 @@
     <ClInclude Include="seek\drawable\blur\kawase_blur.h" />
     <ClInclude Include="seek\drawable\blur\radial_blur.h" />
     <ClInclude Include="seek\drawable\blur\tiltshift_blur.h" />
+    <ClInclude Include="seek\drawable\brdf\ao_sample.h" />
     <ClInclude Include="seek\drawable\brdf\brdf_light.h" />
+    <ClInclude Include="seek\drawable\gems\version1\grass\grass.h" />
     <ClInclude Include="seek\drawable\gems\version1\water\water.h" />
     <ClInclude Include="seek\drawable\gems\version1\water_smulate.h" />
     <ClInclude Include="seek\drawable\render\base_render.h" />
     <ClInclude Include="seek\drawable\sdf\sdf_base.h" />
+    <ClInclude Include="seek\gemo\TorusKnotGeometry.h" />
     <ClInclude Include="seek\menu\console.h" />
     <ClInclude Include="seek\menu\control_panel.h" />
     <ClInclude Include="seek\menu\entry_manager.h" />
@@ -272,6 +278,7 @@
     <ClInclude Include="seek\rmd\gl\gl_view.h" />
     <ClInclude Include="seek\run\pursuit_app.h" />
     <ClInclude Include="seek\run\seek_runner.h" />
+    <ClInclude Include="seek\samples\scene\disolve_scenes.h" />
     <ClInclude Include="seek\section\enum\attachment_em.h" />
     <ClInclude Include="seek\section\enum\camera_em.h" />
     <ClInclude Include="seek\section\enum\config_em.h" />

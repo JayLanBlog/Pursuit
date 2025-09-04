@@ -29,6 +29,11 @@
 #include <drawable/benchmark/sky_sample.h>
 #include <drawable/gems/version1/water/water.h>
 #include <drawable/brdf/brdf_light.h>
+#include <drawable/brdf/ao_sample.h>
+#include <drawable/gems/version1/grass/grass.h>
+#include <drawable/benchmark/sky_box.h>
+#include <drawable/benchmark/custom_model.h>
+#include <samples/scene/disolve_scenes.h>
 using namespace SDF;
 using namespace ModelView;
 using namespace MarkView;
@@ -37,6 +42,9 @@ using namespace Smulate;
 using namespace MView;
 using namespace Water;
 using namespace BRDF;
+using namespace Gems;
+using namespace Acr;
+using namespace Scene;
 
 namespace Seek {
 	namespace Run {
@@ -64,15 +72,15 @@ namespace Seek {
 			RadialBlur radialBlur;
 			DirectionBlur dirctionBlur;
 			WaterSmulater waterSm;
-
 			CubeSkyView  sky;
-
 			GLCubeView cubSky;
-
-
+			AmbientOcclusion aoSample;
 			GerstnerWave water;
-
 			LightBrdf brdf;
+			GrassView grass;
+			SkyBox box;
+			CustM cust;
+			DisolveScene disScene;
 
 			SeekerApp() {
 				//pbrView.EnbleConfig();
@@ -108,7 +116,11 @@ namespace Seek {
 				//sky.LoadScene();
 				//cubSky.LoadScene(screenWidth,screenHeight);
 				//water.LoadScene(screenWidth, screenHeight);
-				brdf.LoadScene(screenWidth,screenHeight);
+				//brdf.LoadScene(screenWidth,screenHeight);
+			//	aoSample.LoadSecene(screenWidth, screenHeight);
+				//box.LoadScene(screenWidth, screenHeight);
+			//	cust.LoadScene(screenWidth, screenHeight);
+				disScene.LoaderScene(screenWidth, screenHeight);
 				SetTargetFPS(120);
 			}
 
@@ -136,6 +148,10 @@ namespace Seek {
 					//sky.Tick();
 					//cubSky.Tick();
 					//water.Tick();
+					//aoSample.Tick();
+					//box.Tick();
+					//cust.Tick();
+					disScene.Tick();
 					BeginDrawing();
 					ClearBackground(BLACK);
 					//round.Draw(screenWidth, screenHeight);
@@ -158,7 +174,11 @@ namespace Seek {
 					//sky.Render();
 					//cubSky.Render();
 					//water.Render();
-					brdf.Render();
+					//brdf.Render();
+					//aoSample.Render();
+					//box.Render();
+					//cust.Render();
+					disScene.Render();
 					DrawFPS(500, 300);
 					EndDrawing();
 				}    // Detect window close button or ESC key

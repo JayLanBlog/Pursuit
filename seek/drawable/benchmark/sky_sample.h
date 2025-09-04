@@ -21,6 +21,28 @@ namespace MView {
 
         const string BasePath = "E:/gl/resource/res/water/";
         const string RootPath = "E:/gl/resource/";
+
+        std::vector<string> faces
+        {
+                BasePath + "gems1/sky/right.jpg",
+                BasePath + "gems1/sky/left.jpg",
+                BasePath + "gems1/sky/top.jpg",
+                BasePath + "gems1/sky/bottom.jpg",
+                BasePath + "gems1/sky/front.jpg",
+                BasePath + "gems1/sky/back.jpg",
+        };
+
+
+        std::vector<string> faces2
+        {
+                BasePath + "gems1/ely_hills/hills_rt.tga",
+                BasePath + "gems1/ely_hills/hills_lf.tga",
+                BasePath + "gems1/ely_hills/hills_up.tga",
+                BasePath + "gems1/ely_hills/hills_dn.tga",
+                BasePath + "gems1/ely_hills/hills_ft.tga",
+                BasePath + "gems1/ely_hills/hills_bk.tga",
+        };
+
 		GLCubeView() {}
 		~GLCubeView() {}
 
@@ -29,13 +51,13 @@ namespace MView {
             unsigned int textureID;
             glGenTextures(1, &textureID);
             glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-            int width, height, nrChannels;
+            int w, h, nrChannels;
             for (unsigned int i = 0; i < faces.size(); i++)
             {
-                unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+                unsigned char* data = stbi_load(faces[i].c_str(), &w, &h, &nrChannels, 0);
                 if (data)
                 {
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
                     stbi_image_free(data);
                 }
                 else
@@ -54,13 +76,16 @@ namespace MView {
 
 
 		void LoadScene(int width, int height) {
-            camera.position = { 0.0f, 5.0f, 30.0f }; // Camera position
-            camera.target = { 0.0f, 10.0f, 0.0f };     // Camera looking at point
+            camera.position = { 0.0f, 0.0f, 6.0f }; // Camera position
+            camera.target = { 0.0f, 1.0f, 0.0f };     // Camera looking at point
             camera.up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
             camera.fovy = 45.0f;                         // Camera field-of-view Y
             camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
             screenWidth = width;
             screenHeight = height;
+
+            glDisable(GL_CULL_FACE);
+
 
             string skyVsPath = RootPath + "shader/water/gems/cubemap.vs";
             string skyPsPath = RootPath + "shader/water/gems/cubemap.fs";
@@ -179,19 +204,10 @@ namespace MView {
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
             
-            std::vector<string> faces
-            {
-                    BasePath + "gems1/sky/right.jpg",
-                    BasePath + "gems1/sky/left.jpg",
-                    BasePath + "gems1/sky/top.jpg",
-                    BasePath + "gems1/sky/bottom.jpg",
-                    BasePath + "gems1/sky/front.jpg",
-                    BasePath + "gems1/sky/back.jpg",
-            };
-
+   
             string cubePath = BasePath + "container.jpg";
             cubeTexture = LoadTexture(cubePath.c_str());
-            cubemapTexture = loadCubemap(faces);
+            cubemapTexture = loadCubemap(faces2);
             model = MatrixIdentity();
             int textureIndex = 0;
             SetShaderValue(shader, GetShaderLocation(shader, "texture1"),&textureIndex,SHADER_UNIFORM_UINT);
@@ -258,8 +274,9 @@ namespace MView {
             //glDrawArrays(GL_TRIANGLES, 0, 36);
             //glBindVertexArray(0);
             // 
+          
             glDepthFunc(GL_LEQUAL); 
-            SetShaderValueMatrix(skyBoxShader, skyViewLoc, Matrix_RotationOnly(&matView));
+            SetShaderValueMatrix(skyBoxShader, skyViewLoc,Matrix_RotationOnly(&matView));
             SetShaderValueMatrix(skyBoxShader, skyProjectLoc, matProj);
             EnableShader(skyBoxShader.id);
             // skybox cube
@@ -269,6 +286,7 @@ namespace MView {
             glDrawArrays(GL_TRIANGLES, 0, 36);
             glBindVertexArray(0);
             glDepthFunc(GL_LESS); // set depth function back to default
+            DisableShader();
 		}
 
         int shaderModelLoc;

@@ -1197,7 +1197,15 @@ namespace PMath {
         Vector4 result = { v.x * scale, v.y * scale, v.z * scale, v.w * scale };
         return result;
     }
-
+    RMAPI Vector4 Vector4Transform(Vector4 v, Matrix m)
+    {
+        Vector4 r;
+        r.x = v.x * m.m0 + v.y * m.m1 + v.z * m.m2 + v.w * m.m3;
+        r.y = v.x * m.m4 + v.y * m.m5 + v.z * m.m6 + v.w * m.m7;
+        r.z = v.x * m.m8 + v.y * m.m9 + v.z * m.m10 + v.w * m.m11;
+        r.w = v.x * m.m12 + v.y * m.m13 + v.z * m.m14 + v.w * m.m15;
+        return r;
+    }
     // Multiply vector by vector
     RMAPI Vector4 Vector4Multiply(Vector4 v1, Vector4 v2)
     {
@@ -1456,9 +1464,9 @@ namespace PMath {
     RMAPI Matrix Matrix_Scale(const Matrix* m, Vector3 s)
     {
         Matrix out = *m;
-        out.m0 *= s.x; out.m4 *= s.x; out.m8 *= s.x; out.m12 *= s.x;
-        out.m1 *= s.y; out.m5 *= s.y; out.m9 *= s.y; out.m13 *= s.y;
-        out.m2 *= s.z; out.m6 *= s.z; out.m10 *= s.z; out.m14 *= s.z;
+        out.m0 *= s.x; out.m4 *= s.x; out.m8 *= s.x; //out.m12 *= s.x;
+        out.m1 *= s.y; out.m5 *= s.y; out.m9 *= s.y; //out.m13 *= s.y;
+        out.m2 *= s.z; out.m6 *= s.z; out.m10 *= s.z;// out.m14 *= s.z;
         return out;
     }
 
@@ -1480,6 +1488,8 @@ namespace PMath {
 
         return out;
     }
+
+
     // Get identity matrix
     RMAPI Matrix MatrixIdentity(void)
     {
@@ -1751,6 +1761,82 @@ namespace PMath {
         return result;
     }
 
+
+    /* 如果 axis 未归一化，可在调用前先做归一化 */
+    static inline float v3_len(const Vector3* v)
+    {
+        return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+    }
+
+    // 或
+    static inline float deg2rad(float deg) {
+        return deg * 3.1415926f / 180.0f;
+    }
+    /* 轴-角旋转：返回 m * R(angle, axis) */
+    RMAPI  Matrix Matrix_Rotate(const Matrix* m, const Vector3 axis, float angle)
+    {
+        /* 1. 归一化轴 */
+        float len = v3_len(&axis);
+        if (len < 1e-6f) len = 1.0f;
+        float x = axis.x / len;
+        float y = axis.y / len;
+        float z = axis.z / len;
+
+        /* 2. 计算三角值 */
+        float c = cosf(angle);
+        float s = sinf(angle);
+        float oc = 1.0f - c;
+
+        /* 3. 构造列主序旋转矩阵 R（4×4） */
+        float r00 = x * x * oc + c;
+        float r10 = y * x * oc + z * s;
+        float r20 = z * x * oc - y * s;
+        float r30 = 0.0f;
+
+        float r01 = x * y * oc - z * s;
+        float r11 = y * y * oc + c;
+        float r21 = z * y * oc + x * s;
+        float r31 = 0.0f;
+
+        float r02 = x * z * oc + y * s;
+        float r12 = y * z * oc - x * s;
+        float r22 = z * z * oc + c;
+        float r32 = 0.0f;
+
+        float r03 = 0.0f;
+        float r13 = 0.0f;
+        float r23 = 0.0f;
+        float r33 = 1.0f;
+
+        /* 4. 列主序乘法：out = m * R  */
+        Matrix out;
+        /* 第 0 列 */
+        out.m0 = m->m0 * r00 + m->m4 * r01 + m->m8 * r02 + m->m12 * r03;
+        out.m1 = m->m1 * r00 + m->m5 * r01 + m->m9 * r02 + m->m13 * r03;
+        out.m2 = m->m2 * r00 + m->m6 * r01 + m->m10 * r02 + m->m14 * r03;
+        out.m3 = m->m3 * r00 + m->m7 * r01 + m->m11 * r02 + m->m15 * r03;
+
+        /* 第 1 列 */
+        out.m4 = m->m0 * r10 + m->m4 * r11 + m->m8 * r12 + m->m12 * r13;
+        out.m5 = m->m1 * r10 + m->m5 * r11 + m->m9 * r12 + m->m13 * r13;
+        out.m6 = m->m2 * r10 + m->m6 * r11 + m->m10 * r12 + m->m14 * r13;
+        out.m7 = m->m3 * r10 + m->m7 * r11 + m->m11 * r12 + m->m15 * r13;
+
+        /* 第 2 列 */
+        out.m8 = m->m0 * r20 + m->m4 * r21 + m->m8 * r22 + m->m12 * r23;
+        out.m9 = m->m1 * r20 + m->m5 * r21 + m->m9 * r22 + m->m13 * r23;
+        out.m10 = m->m2 * r20 + m->m6 * r21 + m->m10 * r22 + m->m14 * r23;
+        out.m11 = m->m3 * r20 + m->m7 * r21 + m->m11 * r22 + m->m15 * r23;
+
+        /* 第 3 列 */
+        out.m12 = m->m0 * r30 + m->m4 * r31 + m->m8 * r32 + m->m12 * r33;
+        out.m13 = m->m1 * r30 + m->m5 * r31 + m->m9 * r32 + m->m13 * r33;
+        out.m14 = m->m2 * r30 + m->m6 * r31 + m->m10 * r32 + m->m14 * r33;
+        out.m15 = m->m3 * r30 + m->m7 * r31 + m->m11 * r32 + m->m15 * r33;
+
+        return out;
+    }
+    
 
     // Get xyz-rotation matrix
     // NOTE: Angle must be provided in radians

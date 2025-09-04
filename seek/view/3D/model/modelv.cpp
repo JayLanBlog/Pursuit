@@ -729,6 +729,7 @@ namespace ModelView {
 		}
 	}
 	
+
 	// Draw a model (with texture if set)
 	void DrawModel(Model model, Vector3 position, float scale, Color tint) {
 		Vector3 vScale = { scale, scale, scale };
