@@ -14,4 +14,12 @@ namespace Text {
 	// Formatting of text with variables to 'embed'
 // WARNING: String returned will expire after this function is called MAX_TEXTFORMAT_BUFFERS times
 	const char* TextFormat(const char* text, ...);
+	// Get a piece of a text string
+	const char* TextSubtext(const char* text, int position, int length);
+
+	unsigned int TextLength(const char* text);
+
+	char* TextToLower(const char* text);
+
+	bool TextIsEqual(const char* text1, const char* text2);
 }

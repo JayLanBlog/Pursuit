@@ -38,7 +38,45 @@ using namespace Loader;
 namespace GEMO {
 #define M_PI  3.1415926
 
+	// Generate sphere mesh (standard sphere)
+	Mesh GenMeshSphere(float radius, int rings, int slices) {
+		Mesh mesh = { 0 };
 
+		if ((rings >= 3) && (slices >= 3))
+		{
+			par_shapes_set_epsilon_degenerate_sphere(0.0);
+			par_shapes_mesh* sphere = par_shapes_create_parametric_sphere(slices, rings);
+			par_shapes_scale(sphere, radius, radius, radius);
+			// NOTE: Soft normals are computed internally
+
+			mesh.vertices = (float*)MALLOC(sphere->ntriangles * 3 * 3 * sizeof(float));
+			mesh.texcoords = (float*)MALLOC(sphere->ntriangles * 3 * 2 * sizeof(float));
+			mesh.normals = (float*)MALLOC(sphere->ntriangles * 3 * 3 * sizeof(float));
+
+			mesh.vertexCount = sphere->ntriangles * 3;
+			mesh.triangleCount = sphere->ntriangles;
+
+			for (int k = 0; k < mesh.vertexCount; k++)
+			{
+				mesh.vertices[k * 3] = sphere->points[sphere->triangles[k] * 3];
+				mesh.vertices[k * 3 + 1] = sphere->points[sphere->triangles[k] * 3 + 1];
+				mesh.vertices[k * 3 + 2] = sphere->points[sphere->triangles[k] * 3 + 2];
+
+				mesh.normals[k * 3] = sphere->normals[sphere->triangles[k] * 3];
+				mesh.normals[k * 3 + 1] = sphere->normals[sphere->triangles[k] * 3 + 1];
+				mesh.normals[k * 3 + 2] = sphere->normals[sphere->triangles[k] * 3 + 2];
+
+				mesh.texcoords[k * 2] = sphere->tcoords[sphere->triangles[k] * 2];
+				mesh.texcoords[k * 2 + 1] = sphere->tcoords[sphere->triangles[k] * 2 + 1];
+			}
+			par_shapes_free_mesh(sphere);
+			// Upload vertex data to GPU (static mesh)
+			UploadMesh(&mesh, false);
+		}
+		else TRACELOG(LOG_WARNING, "MESH: Failed to generate mesh: sphere");
+
+		return mesh;
+	}
 
 
 	Mesh GenMeshKnot(float radius, float size, int radSeg, int sides)

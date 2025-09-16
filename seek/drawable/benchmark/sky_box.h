@@ -120,8 +120,11 @@ namespace Acr {
         }
 
         void Render() {
+            
             BeginMode3D(camera);
             // We are inside the cube, we need to disable backface culling!
+        
+         //   glFrontFace(CW_DEFAULT);
             DisableBackfaceCulling();
             DisableDepthMask();
             DrawModel(skybox, { 0, 0, 0 }, 1.0f, WHITE);

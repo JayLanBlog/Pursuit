@@ -86,7 +86,7 @@ namespace DRAW {
 			matFrustum.m10 = -((float)zfar + (float)znear) / fn;
 			matFrustum.m11 = -1.0f;
 			matFrustum.m12 = 0.0f;
-			matFrustum.m13 = 0.0f;
+			matFrustum.m13 = 0.0f;	
 			matFrustum.m14 = -((float)zfar * (float)znear * 2.0f) / fn;
 			matFrustum.m15 = 0.0f;
 			*PLGL.State.currentMatrix = MatrixMultiply(*PLGL.State.currentMatrix, matFrustum);

@@ -40,3 +40,17 @@ void DrawCircleSector(Vector2 center, float radius, float startAngle, float endA
 
 
 void LoadDrawQuad(void);
+
+// Get collision rectangle for two rectangles collision
+Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);
+
+bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius);
+
+
+// Draw rectangle outline with extended parameters
+void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color);
+
+// Check collision between circle and rectangle
+// NOTE: Reviewed version to take into account corner limit case
+bool CheckCollisionCircleRec(Vector2 center, float radius, Rectangle rec);
+

@@ -152,6 +152,12 @@
     <ClCompile Include="seek\gemo\TorusKnotGeometry.cpp">
       <Filter>seek\gemo</Filter>
     </ClCompile>
+    <ClCompile Include="seek\versatile\blurer.cpp">
+      <Filter>seek\versatile</Filter>
+    </ClCompile>
+    <ClCompile Include="seek\core\gestures.cpp">
+      <Filter>seek\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -201,9 +207,6 @@
     </Filter>
     <Filter Include="seek\section">
       <UniqueIdentifier>{61592317-73eb-4690-84e6-4036f78b4099}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seek\run">
-      <UniqueIdentifier>{25bd4eeb-82bd-45fb-b618-740fcbf07a0d}</UniqueIdentifier>
     </Filter>
     <Filter Include="seek\ui\gl">
       <UniqueIdentifier>{b70f3428-1638-4f44-a33f-ff2a737469a6}</UniqueIdentifier>
@@ -315,6 +318,18 @@
     </Filter>
     <Filter Include="seek\samples\scene">
       <UniqueIdentifier>{09aef8b7-a33e-42a1-af2a-38d7815140d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\run">
+      <UniqueIdentifier>{25bd4eeb-82bd-45fb-b618-740fcbf07a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\samples\unit">
+      <UniqueIdentifier>{b5ffd214-8bb2-4f03-b7f6-2089aadc2e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\versatile">
+      <UniqueIdentifier>{5290bbd9-ec31-4307-8a07-22e6ce0399c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seek\samples\game">
+      <UniqueIdentifier>{7c67fe54-a700-4ece-aec1-d599a199edd2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -647,6 +662,39 @@
     </ClInclude>
     <ClInclude Include="seek\samples\scene\disolve_scenes.h">
       <Filter>seek\samples\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\unit\torusknot.h">
+      <Filter>seek\samples\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\brdf\sky_scatter.h">
+      <Filter>seek\drawable\brdf</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\drawable\brdf\hybird.h">
+      <Filter>seek\drawable\brdf</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\scene\disolver.h">
+      <Filter>seek\samples\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\versatile\blurer.h">
+      <Filter>seek\versatile</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\game\logo.h">
+      <Filter>seek\samples\game</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\game\cat_in_room.h">
+      <Filter>seek\samples\game</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\game\title.h">
+      <Filter>seek\samples\game</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\core\gestures.h">
+      <Filter>seek\core</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\game\ending.h">
+      <Filter>seek\samples\game</Filter>
+    </ClInclude>
+    <ClInclude Include="seek\samples\game\gameplay.h">
+      <Filter>seek\samples\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

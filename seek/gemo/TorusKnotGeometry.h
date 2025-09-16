@@ -17,6 +17,8 @@ namespace GEMO {
 		float heightScale = 1.0f;
 	};
 
+	// Generate sphere mesh (standard sphere)
+	Mesh GenMeshSphere(float radius, int rings, int slices);
 	
 	Mesh GenMeshKnot(float radius, float size, int radSeg, int sides);
 

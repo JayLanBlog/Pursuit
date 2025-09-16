@@ -13,6 +13,8 @@ using namespace PMath;
 using namespace DRAW::GL;
 using namespace Text;
 using namespace System;
+
+
 // Load and draw a cube in NDC
 void LoadDrawCube(void) {
 #if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)
@@ -398,4 +400,43 @@ void DrawTextureFx(Texture2D texture, Vector2 position, float rotation, float sc
     Vector2 origin = { 0.0f, 0.0f };
 
    DrawTextureToFrameBuffer(texture, source, dest, origin, rotation, tint);
+}
+
+
+
+RenderTexture2D LoadRenderTextureDepthTex(int wd, int ht) {
+    RenderTexture2D target = { 0 };
+
+    target.id = LoadFramebuffer(); // Load an empty framebuffer
+
+    if (target.id > 0)
+    {
+        EnableFramebuffer(target.id);
+
+        // Create color texture (default to RGBA)
+        target.texture.id = LoadTexture(0, wd, ht, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 1);
+        target.texture.width = wd;
+        target.texture.height = ht;
+        target.texture.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
+        target.texture.mipmaps = 1;
+
+        // Create depth texture buffer (instead of raylib default renderbuffer)
+        target.depth.id = LoadTextureDepth(wd, ht, false);
+        target.depth.width = wd;
+        target.depth.height = ht;
+        target.depth.format = 19;       //DEPTH_COMPONENT_24BIT?
+        target.depth.mipmaps = 1;
+
+        // Attach color texture and depth texture to FBO
+        FramebufferAttach(target.id, target.texture.id, PL_ATTACHMENT_COLOR_CHANNEL0, PL_ATTACHMENT_TEXTURE2D, 0);
+        FramebufferAttach(target.id, target.depth.id, PL_ATTACHMENT_DEPTH, PL_ATTACHMENT_TEXTURE2D, 0);
+
+        // Check if fbo is complete with attachments (valid)
+        if (FramebufferComplete(target.id)) TRACELOG(LOG_INFO, "FBO: [ID %i] Framebuffer object created successfully", target.id);
+
+        DisableFramebuffer();
+    }
+    else TRACELOG(LOG_WARNING, "FBO: Framebuffer object can not be created");
+
+    return target;
 }

@@ -27,6 +27,15 @@
 #define PL_TEXTURE_WRAP_MIRROR_REPEAT           0x8370      // GL_MIRRORED_REPEAT
 #define PL_TEXTURE_WRAP_MIRROR_CLAMP            0x8742      // GL_MIRROR_CLAMP_EXT
 
+
+//----------------------------------------------------------------------------------
+// Defines and Macros
+//----------------------------------------------------------------------------------
+#ifndef PIXELFORMAT_UNCOMPRESSED_R5G5B5A1_ALPHA_THRESHOLD
+#define PIXELFORMAT_UNCOMPRESSED_R5G5B5A1_ALPHA_THRESHOLD  50    // Threshold over 255 to set alpha as 0
+#endif
+
+
 using namespace Seek;
 
 namespace DRAW {
@@ -117,6 +126,44 @@ namespace DRAW {
 
 
 		Color* LoadImageColors(Image image);
+
+		Color Fade(Color color, float alpha);
+
+		Color GetColor(unsigned int hexValue);
+
+		void SetTextureFilter(Texture2D texture, int filter);
+
+		// Set pixel color formatted into destination pointer
+		void SetPixelColor(void* dstPtr, Color color, int format);
+
+		void ImageResizeCanvas(Image* image, int newWidth, int newHeight, int offsetX, int offsetY, Color fill);
+
+		//------------------------------------------------------------------------------------
+		// Image generation functions
+		//------------------------------------------------------------------------------------
+		// Generate image: plain color
+		Image GenImageColor(int width, int height, Color color);
+
+		// Unload color data loaded with LoadImageColors()
+		void UnloadImageColors(Color* colors);
+
+		// Get src alpha-blended into dst color with tint
+		Color ColorAlphaBlend(Color dst, Color src, Color tint);
+
+		// Convert image data to desired format
+		void ImageFormat(Image* image, int newFormat);
+
+		// Get color from a pixel from certain format
+		Color GetPixelColor(void* srcPtr, int format);
+
+		Vector4* LoadImageDataNormalized(Image image);
+
+		unsigned short FloatToHalf(float x);
+		// Resize and image to new size
+		// NOTE: Uses stb default scaling filters (both bicubic):
+		// STBIR_DEFAULT_FILTER_UPSAMPLE    STBIR_FILTER_CATMULLROM
+		// STBIR_DEFAULT_FILTER_DOWNSAMPLE  STBIR_FILTER_MITCHELL   (high-quality Catmull-Rom)
+		void ImageResize(Image* image, int newWidth, int newHeight);
 	}
 
 }

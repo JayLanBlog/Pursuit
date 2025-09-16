@@ -5,12 +5,106 @@
 #include <math/pr_math.h>
 #include <logger/logger.h>
 #include <core/pass/draw_pass.h>
+#include <core/pass/draw_pass2d.h>
 using namespace System;
 using namespace Text;
 using namespace DRAW::GL;
 
 static Texture2D texShapes = { 1, 1, 1, 1, 7 };                // Texture used on shapes drawing (white pixel loaded by rlgl)
 static Rectangle texShapesRec = { 0.0f, 0.0f, 1.0f, 1.0f };    // Texture source rectangle used on shapes drawing
+
+
+// Check if point is inside circle
+bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius)
+{
+    bool collision = false;
+
+    float distanceSquared = (point.x - center.x) * (point.x - center.x) + (point.y - center.y) * (point.y - center.y);
+
+    if (distanceSquared <= radius * radius) collision = true;
+
+    return collision;
+}
+
+
+// Check collision between circle and rectangle
+// NOTE: Reviewed version to take into account corner limit case
+bool CheckCollisionCircleRec(Vector2 center, float radius, Rectangle rec) {
+    bool collision = false;
+
+    float recCenterX = rec.x + rec.width / 2.0f;
+    float recCenterY = rec.y + rec.height / 2.0f;
+
+    float dx = fabsf(center.x - recCenterX);
+    float dy = fabsf(center.y - recCenterY);
+
+    if (dx > (rec.width / 2.0f + radius)) { return false; }
+    if (dy > (rec.height / 2.0f + radius)) { return false; }
+
+    if (dx <= (rec.width / 2.0f)) { return true; }
+    if (dy <= (rec.height / 2.0f)) { return true; }
+
+    float cornerDistanceSq = (dx - rec.width / 2.0f) * (dx - rec.width / 2.0f) +
+        (dy - rec.height / 2.0f) * (dy - rec.height / 2.0f);
+
+    collision = (cornerDistanceSq <= (radius * radius));
+
+    return collision;
+}
+// Draw rectangle outline with extended parameters
+void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color) {
+    if ((lineThick > rec.width) || (lineThick > rec.height))
+    {
+        if (rec.width >= rec.height) lineThick = rec.height / 2;
+        else if (rec.width <= rec.height) lineThick = rec.width / 2;
+    }
+
+    // When rec = { x, y, 8.0f, 6.0f } and lineThick = 2, the following
+    // four rectangles are drawn ([T]op, [B]ottom, [L]eft, [R]ight):
+    //
+    //   TTTTTTTT
+    //   TTTTTTTT
+    //   LL    RR
+    //   LL    RR
+    //   BBBBBBBB
+    //   BBBBBBBB
+    //
+
+    Rectangle top = { rec.x, rec.y, rec.width, lineThick };
+    Rectangle bottom = { rec.x, rec.y - lineThick + rec.height, rec.width, lineThick };
+    Rectangle left = { rec.x, rec.y + lineThick, lineThick, rec.height - lineThick * 2.0f };
+    Rectangle right = { rec.x - lineThick + rec.width, rec.y + lineThick, lineThick, rec.height - lineThick * 2.0f };
+
+    DrawRectangleRec(top, color);
+    DrawRectangleRec(bottom, color);
+    DrawRectangleRec(left, color);
+    DrawRectangleRec(right, color);
+}
+// Get collision rectangle for two rectangles collision
+Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2)
+{
+    Rectangle overlap = { 0 };
+
+    float left = (rec1.x > rec2.x) ? rec1.x : rec2.x;
+    float right1 = rec1.x + rec1.width;
+    float right2 = rec2.x + rec2.width;
+    float right = (right1 < right2) ? right1 : right2;
+    float top = (rec1.y > rec2.y) ? rec1.y : rec2.y;
+    float bottom1 = rec1.y + rec1.height;
+    float bottom2 = rec2.y + rec2.height;
+    float bottom = (bottom1 < bottom2) ? bottom1 : bottom2;
+
+    if ((left < right) && (top < bottom))
+    {
+        overlap.x = left;
+        overlap.y = top;
+        overlap.width = right - left;
+        overlap.height = bottom - top;
+    }
+
+    return overlap;
+}
+
 
 
 void DrawCircleV(Vector2 center, float radius, Color color) {
@@ -175,6 +269,7 @@ void DrawGrid(int slices, float spacing)
     }
     End();
 }
+
 
 void SetShapesTexture(Texture2D texture, Rectangle source) {
     // Reset texture to default pixel if required

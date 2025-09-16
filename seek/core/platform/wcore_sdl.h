@@ -7,7 +7,7 @@
 // Initialize platform: graphics, inputs and more
 int InitPlatform(void);
 
-double GetTime(void);
+
 
 
 // Swap back buffer with front buffer (screen drawing)

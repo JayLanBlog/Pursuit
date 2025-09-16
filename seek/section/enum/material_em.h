@@ -162,5 +162,23 @@ typedef enum {
     SHADER_ATTRIB_VEC4              // Shader attribute type: vec4 (4 float)
 } ShaderAttributeDataType;
 
+
+// Texture parameters: filter mode
+// NOTE 1: Filtering considers mipmaps if available in the texture
+// NOTE 2: Filter is accordingly set for minification and magnification
+typedef enum {
+    TEXTURE_FILTER_POINT = 0,               // No filter, just pixel approximation
+    TEXTURE_FILTER_BILINEAR,                // Linear filtering
+    TEXTURE_FILTER_TRILINEAR,               // Trilinear filtering (linear with mipmaps)
+    TEXTURE_FILTER_ANISOTROPIC_4X,          // Anisotropic filtering 4x
+    TEXTURE_FILTER_ANISOTROPIC_8X,          // Anisotropic filtering 8x
+    TEXTURE_FILTER_ANISOTROPIC_16X,         // Anisotropic filtering 16x
+} TextureFilter;
+
 const char* glGetPixelFormatName(unsigned int format);
 
+typedef enum {
+    FONT_DEFAULT = 0,               // Default font generation, anti-aliased
+    FONT_BITMAP,                    // Bitmap font generation, no anti-aliasing
+    FONT_SDF                        // SDF font generation, requires external shader
+} FontType;

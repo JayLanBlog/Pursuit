@@ -663,9 +663,7 @@ Matrix GetCameraMatrix2D(Camera2D camera) {
     Matrix matRotation = MatrixRotate( { 0.0f, 0.0f, 1.0f }, camera.rotation* DEG2RAD);
     Matrix matScale = MatrixScale(camera.zoom, camera.zoom, 1.0f);
     Matrix matTranslation = MatrixTranslate(camera.offset.x, camera.offset.y, 0.0f);
-
     matTransform = MatrixMultiply(MatrixMultiply(matOrigin, MatrixMultiply(matScale, matRotation)), matTranslation);
-
     return matTransform;
 }
 
@@ -729,12 +727,10 @@ bool IsKeyReleased(int key)
 bool IsKeyUp(int key)
 {
     bool up = false;
-
     if ((key > 0) && (key < MAX_KEYBOARD_KEYS))
     {
         if (CORE.Input.Keyboard.currentKeyState[key] == 0) up = true;
     }
-
     return up;
 }
 
@@ -783,10 +779,65 @@ int GetCharPressed(void)
     return value;
 }
 
+uint32_t rprand_state[4] = {             // Xoshiro128** state, initialized by SplitMix64
+    0x96ea83c1,
+    0x218b21e5,
+    0xaa91febd,
+    0x976414d4
+};
+
 
 // Set a custom key to exit program
 // NOTE: default exitKey is set to ESCAPE
 void SetExitKey(int key)
 {
     CORE.Input.Keyboard.exitKey = key;
+}
+
+inline uint32_t rprand_rotate_left(const uint32_t x, int k) {
+    return (x << k) | (x >> (32 - k));
+}
+
+uint32_t rprand_xoshiro(void) {
+    const uint32_t result = rprand_rotate_left(rprand_state[1] * 5, 7) * 9;
+    const uint32_t t = rprand_state[1] << 9;
+
+    rprand_state[2] ^= rprand_state[0];
+    rprand_state[3] ^= rprand_state[1];
+    rprand_state[1] ^= rprand_state[2];
+    rprand_state[0] ^= rprand_state[3];
+
+    rprand_state[2] ^= t;
+
+    rprand_state[3] = rprand_rotate_left(rprand_state[3], 11);
+
+    return result;
+}
+
+// Get a random value between min and max included
+int GetRandomValue(int min, int max) {
+    int value = 0;
+
+    if (min > max)
+    {
+        int tmp = max;
+        max = min;
+        min = tmp;
+    }
+
+#if defined(SUPPORT_RPRAND_GENERATOR)
+    value = rprand_get_value(min, max);
+#else
+    // WARNING: Ranges higher than RAND_MAX will return invalid results
+   // More specifically, if (max - min) > INT_MAX there will be an overflow,
+   // and otherwise if (max - min) > RAND_MAX the random value will incorrectly never exceed a certain threshold
+   // NOTE: Depending on the library it can be as low as 32767
+    if ((unsigned int)(max - min) > (unsigned int)RAND_MAX)
+    {
+        TRACELOG(LOG_WARNING, "Invalid GetRandomValue() arguments, range should not be higher than %i", RAND_MAX);
+    }
+
+    value = (rand() % (abs(max - min) + 1) + min);
+#endif
+    return value;
 }

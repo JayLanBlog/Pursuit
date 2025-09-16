@@ -17,7 +17,7 @@
 #include <section/enum/config_em.h>
 #include <core/core.h>
 #include <core/gui/draw_ui.h>
-
+#include <core/gestures.h>
 
 //----------------------------------------------------------------------------------
 // Defines and Macros

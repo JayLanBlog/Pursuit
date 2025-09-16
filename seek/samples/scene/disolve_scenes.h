@@ -34,14 +34,12 @@ namespace Scene {
         }
 
     };
+
 	class DisolveScene {
 	public:
-
 		CustM cust;
 		SkyBox box;
-
         DIsolveFBO* disFbo;
-
 		void LoaderScene(int width, int height) {
             disFbo = new DIsolveFBO(width,height);
 			cust.LoadScene(width,height);
@@ -54,18 +52,12 @@ namespace Scene {
 		}
 
 		void Render() {
+
            
-            cust.Render();
             box.Render();
 
-            /*EnableFramebuffer(disFbo->frameBuffer);
-            ClearScreenBuffers();
-            DisableColorBlend();
-			box.Render();
-            DisableFramebuffer();
-            EnableColorBlend();
-			cust.RenderWithTexture(disFbo->texture);
-			*/
+            cust.Render();
+
 		}
 	};
 

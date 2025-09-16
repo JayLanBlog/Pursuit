@@ -16,7 +16,14 @@ using namespace std;
 
 #define EXIT_FAILURE	1
 
-#define SUPPORT_CONSOLE_TRACELOG
+
+#define SUPPORT_FILEFORMAT_TTF
+
+#define SUPPORT_FILEFORMAT_FNT
+
+#define SUPPORT_GESTURES_SYSTEM
+
+//#define SUPPORT_CONSOLE_TRACELOG
 
 #pragma warning(disable:4996)
 

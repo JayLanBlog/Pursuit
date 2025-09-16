@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,7 +125,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,7 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%VULKAN_SDK%\include;external\gltf;external\qoi;external\imgui;seek\;external\;seek\ui;seek\ui\vk;seek\ui\gl;tool\;system;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +165,7 @@
     <ClCompile Include="external\stb_image.cpp" />
     <ClCompile Include="pursuit_engine.cpp" />
     <ClCompile Include="seek\core\core.cpp" />
+    <ClCompile Include="seek\core\gestures.cpp" />
     <ClCompile Include="seek\core\gui\draw_ui.cpp" />
     <ClCompile Include="seek\core\pass\draw_pass.cpp" />
     <ClCompile Include="seek\core\pass\draw_pass2d.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="seek\ui\imgui_impl_sdl3.cpp" />
     <ClCompile Include="seek\ui\seek_gl.cpp" />
     <ClCompile Include="seek\ui\vk\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="seek\versatile\blurer.cpp" />
     <ClCompile Include="seek\view\3D\loader\loader_md.cpp" />
     <ClCompile Include="seek\view\3D\model\modelv.cpp" />
     <ClCompile Include="system\file\imge.cpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="external\stb_image.h" />
     <ClInclude Include="seek\core\core.h" />
     <ClInclude Include="seek\core\core_global.h" />
+    <ClInclude Include="seek\core\gestures.h" />
     <ClInclude Include="seek\core\gui\draw_ui.h" />
     <ClInclude Include="seek\core\pass\draw_pass.h" />
     <ClInclude Include="seek\core\pass\draw_pass2d.h" />
@@ -252,6 +255,8 @@
     <ClInclude Include="seek\drawable\blur\tiltshift_blur.h" />
     <ClInclude Include="seek\drawable\brdf\ao_sample.h" />
     <ClInclude Include="seek\drawable\brdf\brdf_light.h" />
+    <ClInclude Include="seek\drawable\brdf\hybird.h" />
+    <ClInclude Include="seek\drawable\brdf\sky_scatter.h" />
     <ClInclude Include="seek\drawable\gems\version1\grass\grass.h" />
     <ClInclude Include="seek\drawable\gems\version1\water\water.h" />
     <ClInclude Include="seek\drawable\gems\version1\water_smulate.h" />
@@ -278,7 +283,14 @@
     <ClInclude Include="seek\rmd\gl\gl_view.h" />
     <ClInclude Include="seek\run\pursuit_app.h" />
     <ClInclude Include="seek\run\seek_runner.h" />
+    <ClInclude Include="seek\samples\game\cat_in_room.h" />
+    <ClInclude Include="seek\samples\game\ending.h" />
+    <ClInclude Include="seek\samples\game\gameplay.h" />
+    <ClInclude Include="seek\samples\game\logo.h" />
+    <ClInclude Include="seek\samples\game\title.h" />
+    <ClInclude Include="seek\samples\scene\disolver.h" />
     <ClInclude Include="seek\samples\scene\disolve_scenes.h" />
+    <ClInclude Include="seek\samples\unit\torusknot.h" />
     <ClInclude Include="seek\section\enum\attachment_em.h" />
     <ClInclude Include="seek\section\enum\camera_em.h" />
     <ClInclude Include="seek\section\enum\config_em.h" />
@@ -302,6 +314,7 @@
     <ClInclude Include="seek\ui\imgui_impl_sdl3.h" />
     <ClInclude Include="seek\ui\seek_ui.h" />
     <ClInclude Include="seek\ui\vk\imgui_impl_vulkan.h" />
+    <ClInclude Include="seek\versatile\blurer.h" />
     <ClInclude Include="seek\view\3D\loader\loader_md.h" />
     <ClInclude Include="seek\view\3D\model\modelv.h" />
     <ClInclude Include="system\config\platform_def.h" />

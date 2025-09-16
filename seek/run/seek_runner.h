@@ -34,6 +34,11 @@
 #include <drawable/benchmark/sky_box.h>
 #include <drawable/benchmark/custom_model.h>
 #include <samples/scene/disolve_scenes.h>
+#include <drawable/brdf/sky_scatter.h>
+#include <drawable/brdf/hybird.h>
+#include <samples/scene/disolver.h>
+#include <samples/game/cat_in_room.h>
+
 using namespace SDF;
 using namespace ModelView;
 using namespace MarkView;
@@ -45,6 +50,7 @@ using namespace BRDF;
 using namespace Gems;
 using namespace Acr;
 using namespace Scene;
+using namespace Game;
 
 namespace Seek {
 	namespace Run {
@@ -81,10 +87,15 @@ namespace Seek {
 			SkyBox box;
 			CustM cust;
 			DisolveScene disScene;
+			Fog fog;
+			HyBird hyBird;
+			Disolver disolver;
+			Room room;
 
 			SeekerApp() {
 				//pbrView.EnbleConfig();
 				//shadowView.EnablePiplineState();
+			    //SetConfigFlags(FLAG_MSAA_4X_HINT);
 				Create();
 				Init();
 			}
@@ -117,10 +128,14 @@ namespace Seek {
 				//cubSky.LoadScene(screenWidth,screenHeight);
 				//water.LoadScene(screenWidth, screenHeight);
 				//brdf.LoadScene(screenWidth,screenHeight);
-			//	aoSample.LoadSecene(screenWidth, screenHeight);
+				//aoSample.LoadSecene(screenWidth, screenHeight);
 				//box.LoadScene(screenWidth, screenHeight);
-			//	cust.LoadScene(screenWidth, screenHeight);
-				disScene.LoaderScene(screenWidth, screenHeight);
+				//cust.LoadScene(screenWidth, screenHeight);
+				//disScene.LoaderScene(screenWidth, screenHeight);
+				//fog.LoadScene(screenWidth, screenHeight);
+				//hyBird.LoadScene(screenWidth,screenHeight);
+				//disolver.LoaderScene(screenWidth, screenHeight);
+				room.Load();
 				SetTargetFPS(120);
 			}
 
@@ -151,9 +166,15 @@ namespace Seek {
 					//aoSample.Tick();
 					//box.Tick();
 					//cust.Tick();
-					disScene.Tick();
+					//disScene.Tick();
+					//fog.Tick();
+				//	hyBird.Tick();
+				//	hyBird.PreRender();
+				//	disolver.Tick();
+				//	disolver.PreRender();
+					room.Tick();
 					BeginDrawing();
-					ClearBackground(BLACK);
+					ClearBackground(WHITE);
 					//round.Draw(screenWidth, screenHeight);
 					//shadowView.Draw();
 					//actor.Shaow();
@@ -178,7 +199,11 @@ namespace Seek {
 					//aoSample.Render();
 					//box.Render();
 					//cust.Render();
-					disScene.Render();
+					//disScene.Render();
+					//fog.Render();
+					//hyBird.Render();
+				//	disolver.Render();
+					room.Render();
 					DrawFPS(500, 300);
 					EndDrawing();
 				}    // Detect window close button or ESC key

@@ -73,7 +73,7 @@ namespace Acr {
 
 		void Render() {
 			BeginMode3D(camera);
-		
+			
 			DrawModel(model, position, 1.0f, RED);
 		
 			EndMode3D();

@@ -140,6 +140,26 @@ Matrix GetCameraMatrix2D(Camera2D camera);                        // Get camera 
 
 
 
+void SetGesturesEnabled(unsigned int flags);            // Enable a set of gestures using flags
+bool IsGestureDetected(unsigned int gesture);           // Check if a gesture have been detected
+int GetGestureDetected(void);                           // Get latest detected gesture
+float GetGestureHoldDuration(void);                     // Get gesture hold time in seconds
+Vector2 GetGestureDragVector(void);                     // Get gesture drag vector
+float GetGestureDragAngle(void);                        // Get gesture drag angle
+Vector2 GetGesturePinchVector(void);                    // Get gesture pinch delta
+float GetGesturePinchAngle(void);                       // Get gesture pinch angle
+
+
+// Get elapsed time measure in seconds
+double GetTime(void);
 
 
 
+uint32_t rprand_xoshiro(void);
+
+inline uint32_t rprand_rotate_left(const uint32_t x, int k);
+
+extern  uint32_t rprand_state[4];
+
+// Get a random value between min and max included
+int GetRandomValue(int min, int max);

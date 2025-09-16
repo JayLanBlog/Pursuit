@@ -209,21 +209,21 @@ namespace Batch {
 			glBufferSubData(GL_ARRAY_BUFFER, 0, PLGL.State.vertexCounter * 4 * sizeof(unsigned char), batch->vertexBuffer[batch->currentBuffer].colors);
 			//glBufferData(GL_ARRAY_BUFFER, sizeof(float)*4*4*batch->vertexBuffer[batch->currentBuffer].elementCount, batch->vertexBuffer[batch->currentBuffer].colors, GL_DYNAMIC_DRAW);    // Update all buffer
 			// NOTE: glMapBuffer() causes sync issue
-		// If GPU is working with this buffer, glMapBuffer() will wait(stall) until GPU to finish its job
-		// To avoid waiting (idle), you can call first glBufferData() with NULL pointer before glMapBuffer()
-		// If you do that, the previous data in PBO will be discarded and glMapBuffer() returns a new
-		// allocated pointer immediately even if GPU is still working with the previous data
+			// If GPU is working with this buffer, glMapBuffer() will wait(stall) until GPU to finish its job
+			// To avoid waiting (idle), you can call first glBufferData() with NULL pointer before glMapBuffer()
+			// If you do that, the previous data in PBO will be discarded and glMapBuffer() returns a new
+			// allocated pointer immediately even if GPU is still working with the previous data
 
-		// Another option: map the buffer object into client's memory
-		// Probably this code could be moved somewhere else...
-		// batch->vertexBuffer[batch->currentBuffer].vertices = (float *)glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
-		// if (batch->vertexBuffer[batch->currentBuffer].vertices)
-		// {
-			// Update vertex data
-		// }
-		// glUnmapBuffer(GL_ARRAY_BUFFER);
+			// Another option: map the buffer object into client's memory
+			// Probably this code could be moved somewhere else...
+			// batch->vertexBuffer[batch->currentBuffer].vertices = (float *)glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
+			// if (batch->vertexBuffer[batch->currentBuffer].vertices)
+			// {
+				// Update vertex data
+			// }
+			// glUnmapBuffer(GL_ARRAY_BUFFER);
 
-		// Unbind the current VAO
+			// Unbind the current VAO
 			if (PLGL.ExtSupported.vao) glBindVertexArray(0);
 		}
 

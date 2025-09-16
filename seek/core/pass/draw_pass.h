@@ -45,3 +45,7 @@ void DrawTextureFx(Texture2D texture, Vector2 position, float rotation, float sc
 
 // Load and draw a cube in NDC
 void LoadDrawCube(void);
+
+
+
+RenderTexture2D LoadRenderTextureDepthTex(int wd, int ht);
